@@ -2,142 +2,138 @@ package project;
 
 import java.awt.Color;
 import java.awt.Font;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 @SuppressWarnings("serial")
 public class SelectMenu extends JDialog {
-	
 
-	private JButton jbtnView; //ºä¹öÆ°
-	private JButton jbtnReport;//·¹Æ÷Æ®¹öÆ°
-	private JTextField jtfLineinput;//¿øÇÏ´Â ÁÙ ÀÔ·ÂÅØ½ºÆ®ÇÊµå
-	private JTextField jtfFileNameInput;//¿øÇÏ´Â ÁÙ ÀÔ·ÂÅØ½ºÆ®ÇÊµå
-	private JButton jbtnFileSelect;//ÆÄÀÏ¼±ÅÃÇÑ°Å ¶ç¿ì´Â¿ëµµ
-	
+	private JButton jbtnView; // ë·°ë²„íŠ¼
+	private JButton jbtnReport;// ë ˆí¬íŠ¸ë²„íŠ¼
+	private JTextField jtfLineinput;// ì›í•˜ëŠ” ì¤„ ì…ë ¥í…ìŠ¤íŠ¸í•„ë“œ
+	private JTextField jtfFileNameInput;// ì›í•˜ëŠ” ì¤„ ì…ë ¥í…ìŠ¤íŠ¸í•„ë“œ
+	private JButton jbtnFileSelect;// íŒŒì¼ì„ íƒí•œê±° ë„ìš°ëŠ”ìš©ë„
 
+	/**
+	 * ì‚¬ìš©ìê°€ ê³ ë¥¸ íŒŒì¼ì´ë¦„ì„ í™”ë©´ì— ë„ìš°ëŠ” ë©”ì†Œë“œ
+	 * 
+	 * @param name
+	 */
 	public void JtextFilememo(String name) {
 		jtfFileNameInput.setText(name);
-	}
-	
-	
+	}// JtextFilememo
+
 	public JButton getJbtnView() {
 		return jbtnView;
-	}
+	}// getJbtnView
 
 	public JTextField getJtfFileNameInput() {
 		return jtfFileNameInput;
-	}
-
-
+	}// getJtfFileNameInput
 
 	public JButton getJbtnFileSelect() {
 		return jbtnFileSelect;
-	}
+	}// getJbtnFileSelect
 
 	public void setJbtnFileSelect(JButton jbtnFileSelect) {
 		this.jbtnFileSelect = jbtnFileSelect;
-	}
+	}// setJbtnFileSelect
 
 	public void setJbtnView(JButton jbtnView) {
 		this.jbtnView = jbtnView;
-	}
+	}// setJbtnView
 
 	public JButton getJbtnReport() {
 		return jbtnReport;
-	}
+	}// getJbtnReport
 
 	public void setJbtnReport(JButton jbtnReport) {
 		this.jbtnReport = jbtnReport;
-	}
+	}// setJbtnReport
 
 	public JTextField getJtfLineinput() {
 		return jtfLineinput;
-	}
+	}// getJtfLineinput
 
 	public void setJtfLineinput(JTextField jtfLineinput) {
 		this.jtfLineinput = jtfLineinput;
-	}
+	}// setJtfLineinput
 
 	public SelectMenu(Login lg) {
-		super(lg, "Select Menu", false);
-		lg.dispose(); //·Î±×ÀÎÃ¢ ´İ¾Æ¹ö¸®±â
-		System.out.println(lg.getId());
-		jtfLineinput=new JTextField(); //ÁÙÀÔ·ÂÃ¢
-		jtfLineinput.setBorder(new LineBorder(Color.BLACK,2));
-		JLabel jlblLineinput=new JLabel("¿øÇÏ´Â ¶óÀÎ ¹üÀ§¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. ex)100~1500"); //ÁÙÀÔ·Â
-		jlblLineinput.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,18));	
-		JLabel jlblLineinput1=new JLabel("ex)100~1500"); //ÁÙÀÔ·Â
-		jlblLineinput1.setFont(new Font("¸¼Àº°íµñ",Font.ITALIC,12));	
-		
-		
-		jbtnView=new JButton("View"); //ºä¹öÆ° 
-		jbtnView.setFont(new Font("¸¼Àº°íµñ",Font.ITALIC,25));
-		jbtnView.setBackground(new Color(0x5929D0));
-		jbtnView.setForeground(Color.WHITE);
-		jbtnView.setBorder(new LineBorder(Color.BLACK,2));
-		
-		jbtnReport=new JButton("Report"); //·¹Æ÷Æ®¹öÆ° 
-		jbtnReport.setFont(new Font("¸¼Àº°íµñ",Font.ITALIC,25));
-		jbtnReport.setBackground(new Color(0x5929D0));
-		jbtnReport.setForeground(Color.WHITE);
-		jbtnReport.setBorder(new LineBorder(Color.BLACK,2));
-		
-		JLabel jlblFile=new JLabel("ºĞ¼®ÇÒ ÆÄÀÏÀ» ¼±ÅÃÇØÁÖ¼¼¿ä"); //ÆÄÀÏ¼±ÅÃ¶óº§
-		jlblFile.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,18)); //ÆÄÀÏ¼±ÅÃ¶óº§ ÆùÆ®
-		
-		jbtnFileSelect=new JButton("ÆÄÀÏ¼±ÅÃ"); //ºä¹öÆ° 
-		jbtnFileSelect.setFont(new Font("¸¼Àº°íµñ",Font.ITALIC,12));
-		jbtnFileSelect.setBackground(new Color(0x5929D0));
-		jbtnFileSelect.setForeground(Color.WHITE);
-		jbtnFileSelect.setBorder(new LineBorder(Color.BLACK,2));
-		
-		jtfFileNameInput=new JTextField(); //ÁÙÀÔ·ÂÃ¢
-		jtfFileNameInput.setEditable(false);
-		jtfFileNameInput.setBorder(new LineBorder(Color.BLACK,1));
-		jtfFileNameInput.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,12)); 
-		jtfFileNameInput.setBackground(new Color(0xF3F5F7));	
+		super(lg, "Select Menu", false); // JDialog
+		lg.dispose(); // ë¡œê·¸ì¸ì„±ê³µí–ˆìœ¼ë‹ˆê¹Œ ë‹«ì•„ë²„ë¦¬ê¸°
+		jtfLineinput = new JTextField(); // ì¤„ì…ë ¥ì°½
+		jtfLineinput.setBorder(new LineBorder(Color.BLACK, 2)); // ê°•ì¡°ì—­í• 
+		JLabel jlblLineinput = new JLabel("ì›í•˜ëŠ” ë¼ì¸ ë²”ìœ„ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. ex)100~1500"); // ì¤„ì…ë ¥
+		jlblLineinput.setFont(new Font("ë§‘ì€ê³ ë”•", Font.BOLD, 18)); // í°íŠ¸ì„¤ì •
+		JLabel jlblLineinput1 = new JLabel("ex)100~1500"); // ì¤„ì…ë ¥
+		jlblLineinput1.setFont(new Font("ë§‘ì€ê³ ë”•", Font.ITALIC, 12)); // í°íŠ¸ì„¤ì •
 
-		JPanel jp=new JPanel();		
-		jp.setLayout(null);
-		jp.setBackground(new Color(0xF3F5F7));
-		//4.¹èÄ¡
-		jp.add(jtfLineinput);// ÁÙÀÔ·ÂÅØ½ºÆ®Ã¢
-		jp.add(jlblLineinput);//ÁÙÀÔ·Â¶óº§
-		jp.add(jlblLineinput1);//ÁÙÀÔ·Â¶óº§
-		jp.add(jbtnView);// view¹öÆ°
-		jp.add(jbtnReport);//report¹öÆ°
-		jp.add(jlblFile);//report¹öÆ°
+		jbtnView = new JButton("View"); // ë·°ë²„íŠ¼
+		jbtnView.setFont(new Font("ë§‘ì€ê³ ë”•", Font.ITALIC, 25)); // í°íŠ¸ì„¤ì •
+		jbtnView.setBackground(new Color(0x5929D0)); // ë²„íŠ¼ìƒ‰ìƒì„¤ì •
+		jbtnView.setForeground(Color.WHITE);// ë²„íŠ¼ê¸€ììƒ‰ê¹”ì„¤ì •
+		jbtnView.setBorder(new LineBorder(Color.BLACK, 2));// ë²„íŠ¼ê°•ì¡°
+
+		jbtnReport = new JButton("Report"); // ë ˆí¬íŠ¸ë²„íŠ¼
+		jbtnReport.setFont(new Font("ë§‘ì€ê³ ë”•", Font.ITALIC, 25));// ë²„íŠ¼ í°íŠ¸ì„¤ì •
+		jbtnReport.setBackground(new Color(0x5929D0));// ë²„íŠ¼ìƒ‰ìƒì„¤ì •
+		jbtnReport.setForeground(Color.WHITE);// ë²„íŠ¼ê¸€ììƒ‰ê¹”ì„±ì •
+		jbtnReport.setBorder(new LineBorder(Color.BLACK, 2));// ê°•ì¡°ì—­í• 
+
+		JLabel jlblFile = new JLabel("ë¶„ì„í•  íŒŒì¼ì„ ì„ íƒí•´ì£¼ì„¸ìš”"); // íŒŒì¼ì„ íƒë¼ë²¨
+		jlblFile.setFont(new Font("ë§‘ì€ê³ ë”•", Font.BOLD, 18)); // íŒŒì¼ì„ íƒë¼ë²¨ í°íŠ¸
+
+		jbtnFileSelect = new JButton("íŒŒì¼ì„ íƒ"); // ë·°ë²„íŠ¼
+		jbtnFileSelect.setFont(new Font("ë§‘ì€ê³ ë”•", Font.ITALIC, 12)); // í°íŠ¸ì„¤ì •
+		jbtnFileSelect.setBackground(new Color(0x5929D0));// ë²„íŠ¼ìƒ‰ìƒì„¤ì •
+		jbtnFileSelect.setForeground(Color.WHITE);// ë²„íŠ¼ê¸€ììƒ‰ê¹”
+		jbtnFileSelect.setBorder(new LineBorder(Color.BLACK, 2)); // ê°•ì¡°
+
+		jtfFileNameInput = new JTextField(); // ì¤„ì…ë ¥ì°½
+		jtfFileNameInput.setEditable(false); // ì‚¬ìš©ìê°€ ìˆ˜ì •í•˜ëŠ”ê±° ë§‰ê²Œ ì„¤ì •
+		jtfFileNameInput.setBorder(new LineBorder(Color.BLACK, 1));// ê°•ì¡°ì—­í• 
+		jtfFileNameInput.setFont(new Font("ë§‘ì€ê³ ë”•", Font.BOLD, 12)); // í°íŠ¸ì„¤ì •
+		jtfFileNameInput.setBackground(new Color(0xF3F5F7)); // ìƒ‰ìƒì„¤ì •
+
+		JPanel jp = new JPanel(); // íŒ¨ë„ìƒì„±
+		jp.setLayout(null); // ì‚¬ìš©ìì§€ì •ìœ¼ë¡œ ê¾¸ë¯¸ê¸° ìœ„í•´
+		jp.setBackground(new Color(0xF3F5F7)); // íŒ¨ë„ìƒ‰ìƒì„¤ì •
+
+		// 4.ë°°ì¹˜(jpë²„íŠ¼ì— ë‹¤ ë„£ê¸°)
+		jp.add(jtfLineinput);// ì¤„ì…ë ¥í…ìŠ¤íŠ¸ì°½
+		jp.add(jlblLineinput);// ì¤„ì…ë ¥ë¼ë²¨
+		jp.add(jlblLineinput1);// ì¤„ì…ë ¥ë¼ë²¨
+		jp.add(jbtnView);// viewë²„íŠ¼
+		jp.add(jbtnReport);// reportë²„íŠ¼
+		jp.add(jlblFile);// reportë²„íŠ¼
 		jp.add(jtfFileNameInput);//
 		jp.add(jbtnFileSelect);//
-		add(jp);
-		jlblFile.setBounds(100, 50, 300, 50); // ÁÙÀÔ·Â¶óº§
-		jtfFileNameInput.setBounds(100, 100, 200, 30); // ÆÄÀÏ¼±ÅÃÇÑ°Å º¸¿©ÁÜ
-		jbtnFileSelect.setBounds(305, 100, 95, 30); // ÆÄÀÏ¼±ÅÃ¹öÆ°
-		jlblLineinput.setBounds(100, 160, 300, 30); // ÁÙÀÔ·Â¶óº§
-		jlblLineinput1.setBounds(100, 180, 300, 30); // ÁÙÀÔ·Â¶óº§
-		jtfLineinput.setBounds(100, 210, 300, 30); // ÁÙÀÔ·ÂÅØ½ºÆ®Ã¢
-		jbtnView.setBounds(100,280,300,50); // ºä¹öÆ°
-		jbtnReport.setBounds(100,350,300,50); // ·¹Æ÷Æ®¹öÆ°
-		
-		SelectmenuEvt selectEvt=new SelectmenuEvt(this,lg); //ÀÌº¥Æ® °´Ã¼ »ı¼º
-		jbtnView.addActionListener(selectEvt); //¾×¼ÇÀÌº¥Æ®
-		jbtnReport.addActionListener(selectEvt); //¾×¼ÇÀÌº¥Æ®
+
+		add(jp);// jpë²„íŠ¼ ì¶”ê°€
+
+		jlblFile.setBounds(100, 50, 300, 50); // ì¤„ì…ë ¥ë¼ë²¨
+		jtfFileNameInput.setBounds(100, 100, 200, 30); // íŒŒì¼ì„ íƒí•œê±° ë³´ì—¬ì¤Œ
+		jbtnFileSelect.setBounds(305, 100, 95, 30); // íŒŒì¼ì„ íƒë²„íŠ¼
+		jlblLineinput.setBounds(100, 160, 300, 30); // ì¤„ì…ë ¥ë¼ë²¨
+		jlblLineinput1.setBounds(100, 180, 300, 30); // ì¤„ì…ë ¥ë¼ë²¨
+		jtfLineinput.setBounds(100, 210, 300, 30); // ì¤„ì…ë ¥í…ìŠ¤íŠ¸ì°½
+		jbtnView.setBounds(100, 280, 300, 50); // ë·°ë²„íŠ¼
+		jbtnReport.setBounds(100, 350, 300, 50); // ë ˆí¬íŠ¸ë²„íŠ¼
+
+		SelectmenuEvt selectEvt = new SelectmenuEvt(this, lg); // ì´ë²¤íŠ¸ ê°ì²´ ìƒì„±
+		jbtnView.addActionListener(selectEvt); // ì•¡ì…˜ì´ë²¤íŠ¸
+		jbtnReport.addActionListener(selectEvt); // ì•¡ì…˜ì´ë²¤íŠ¸
 		jbtnFileSelect.addActionListener(selectEvt);
-		setBounds(100, 100, 500, 500);//À©µµ¿ì»çÀÌÁî
-		setVisible(true);//°¡½ÃÈ­
-		addWindowListener(selectEvt);
-		
-	}
-	
-}
+
+		setBounds(100, 100, 500, 500);// ìœˆë„ìš°ì‚¬ì´ì¦ˆ
+		addWindowListener(selectEvt); // ìœˆë„ìš°ì´ë²¤íŠ¸ ì¶”ê°€
+		setVisible(true);// ê°€ì‹œí™”
+
+	}// ìƒì„±ì
+
+}// class
