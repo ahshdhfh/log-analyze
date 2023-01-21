@@ -13,230 +13,230 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class Result extends JDialog {
 	
-	public Result(SelectMenu main,SelectmenuEvt smenu) {
+	public Result(SelectMenu main,SelectmenuEvt smenu,LogVO lv) {
 		super(main, "Result", false);
 		
-		JTextField jtfViewLine=new JTextField(); //¹üÀ§¼±ÅÃÅÃ½ºÆ®Ã¢
-		jtfViewLine.setText("ÃÑ log °³¼ö´Â "+smenu.getCntLine()+"°³ÀÌ¸ç,"+main.getJtfLineinput().getText() +"¹üÀ§ÀÇ ·Î±×ºÐ¼®°á°úÀÔ´Ï´Ù."); //¹üÀ§¼±ÅÃÅÃ½ºÆ®Ã¢
+		JTextField jtfViewLine=new JTextField(); //ë²”ìœ„ì„ íƒíƒìŠ¤íŠ¸ì°½
+		jtfViewLine.setText("ì´ log ê°œìˆ˜ëŠ” "+smenu.getCntLine()+"ê°œì´ë©°,"+main.getJtfLineinput().getText() +"ë²”ìœ„ì˜ ë¡œê·¸ë¶„ì„ê²°ê³¼ìž…ë‹ˆë‹¤."); //ë²”ìœ„ì„ íƒíƒìŠ¤íŠ¸ì°½
 		jtfViewLine.setEditable(false);
 		jtfViewLine.setBorder(new LineBorder(Color.BLACK,1));
-		jtfViewLine.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,12)); 
+		jtfViewLine.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,12)); 
 		jtfViewLine.setBackground(new Color(0xF3F5F7));	
 		
-		JTextField jtfFile=new JTextField(); //¼±ÅÃÆÄÀÏÅØ½ºÆ®
-		jtfFile.setText(smenu.getfName()); //¼±ÅÃÇÑ ÆÄÀÏ ÅØ½ºÆ®Ã¢À¸·Î
+		JTextField jtfFile=new JTextField(); //ì„ íƒíŒŒì¼í…ìŠ¤íŠ¸
+		jtfFile.setText(smenu.getfName()); //ì„ íƒí•œ íŒŒì¼ í…ìŠ¤íŠ¸ì°½ìœ¼ë¡œ
 		jtfFile.setEditable(false);
 		jtfFile.setBorder(new LineBorder(Color.BLACK,2));
-		jtfFile.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,15)); 
+		jtfFile.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,15)); 
 		jtfFile.setBackground(Color.WHITE);
-		JLabel jlblFile=new JLabel("¼±ÅÃÇÑ ÆÄÀÏ: "); //¼±ÅÃÆÄÀÏ¶óº§
+		JLabel jlblFile=new JLabel("ì„ íƒí•œ íŒŒì¼: "); //ì„ íƒíŒŒì¼ë¼ë²¨
 		
-		JTextField jtfmaxKey=new JTextField(); //1¹ø
-		jtfmaxKey.setText(smenu.getMostFrequentKey()+" / "+smenu.getMostFrequentKeyV()+"°³");
+		JTextField jtfmaxKey=new JTextField(); //1ë²ˆ
+		jtfmaxKey.setText(lv.getMostFrequentKey()+" / "+lv.getMostFrequentKeyV()+"ê°œ");
 		 jtfmaxKey.setEditable(false);
 		 jtfmaxKey.setBorder(new LineBorder(Color.BLACK,2));
-		 jtfmaxKey.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,15)); 
+		 jtfmaxKey.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,15)); 
 		 jtfmaxKey.setBackground(Color.WHITE);
-		JLabel jlblmaxKey=new JLabel("1. ÃÖ´Ù »ç¿ëÅ°: "); //1¹ø °á°ú: ÅØ½ºÆ®
+		JLabel jlblmaxKey=new JLabel("1. ìµœë‹¤ ì‚¬ìš©í‚¤: "); //1ë²ˆ ê²°ê³¼: í…ìŠ¤íŠ¸
 		
-		JTextField jtfbrowseronnect=new JTextField(); //2¹ø
-		jtfbrowseronnect.setText(rateText(smenu.getIe(),smenu.getCntLine()));
+		JTextField jtfbrowseronnect=new JTextField(); //2ë²ˆ
+		jtfbrowseronnect.setText(rateText(lv.getIe(),smenu.getCntLine()));
 		jtfbrowseronnect.setEditable(false);
 		jtfbrowseronnect.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbrowseronnect.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,12)); 
+		jtfbrowseronnect.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,12)); 
 		jtfbrowseronnect.setBackground(Color.WHITE);
-		JLabel jlblbrowseronnect=new JLabel("2. ºê¶ó¿ìÀú: "); //2¹ø°á°ú: ÅØ½ºÆ®
+		JLabel jlblbrowseronnect=new JLabel("2. ë¸Œë¼ìš°ì €: "); //2ë²ˆê²°ê³¼: í…ìŠ¤íŠ¸
 
 		
-		JTextField jtfbrowseronnect1=new JTextField(); //2¹ø_1
-		jtfbrowseronnect1.setText(rateText(smenu.getFirefox(),smenu.getCntLine()));
+		JTextField jtfbrowseronnect1=new JTextField(); //2ë²ˆ_1
+		jtfbrowseronnect1.setText(rateText(lv.getFirefox(),smenu.getCntLine()));
 		jtfbrowseronnect1.setEditable(false);
 		jtfbrowseronnect1.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbrowseronnect1.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,12)); 
+		jtfbrowseronnect1.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,12)); 
 		jtfbrowseronnect1.setBackground(Color.WHITE);
 		
-		JTextField jtfbrowseronnect2=new JTextField(); //2¹ø_2
-		jtfbrowseronnect2.setText(rateText(smenu.getChrome(),smenu.getCntLine()));
+		JTextField jtfbrowseronnect2=new JTextField(); //2ë²ˆ_2
+		jtfbrowseronnect2.setText(rateText(lv.getChrome(),smenu.getCntLine()));
 		jtfbrowseronnect2.setEditable(false);
 		jtfbrowseronnect2.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbrowseronnect2.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,12)); 
+		jtfbrowseronnect2.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,12)); 
 		jtfbrowseronnect2.setBackground(Color.WHITE);
 		
-		JTextField jtfbrowseronnect3=new JTextField(); //2¹ø_3
-		jtfbrowseronnect3.setText(rateText(smenu.getSafari(),smenu.getCntLine()));
+		JTextField jtfbrowseronnect3=new JTextField(); //2ë²ˆ_3
+		jtfbrowseronnect3.setText(rateText(lv.getSafari(),smenu.getCntLine()));
 		jtfbrowseronnect3.setEditable(false);
 		jtfbrowseronnect3.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbrowseronnect3.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,12)); 
+		jtfbrowseronnect3.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,12)); 
 		jtfbrowseronnect3.setBackground(Color.WHITE);		
 		
-		JTextField jtfbrowseronnect4=new JTextField(); //2¹ø_4
-		jtfbrowseronnect4.setText(rateText(smenu.getOpera(),smenu.getCntLine()));
+		JTextField jtfbrowseronnect4=new JTextField(); //2ë²ˆ_4
+		jtfbrowseronnect4.setText(rateText(lv.getOpera(),smenu.getCntLine()));
 		jtfbrowseronnect4.setEditable(false);
 		jtfbrowseronnect4.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbrowseronnect4.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,12)); 
+		jtfbrowseronnect4.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,12)); 
 		jtfbrowseronnect4.setBackground(Color.WHITE);	
 		
-		JTextField jtfbr1=new JTextField(); //2¹øºê¶ó¿ìÀú IE
-		jtfbr1.setText("IE : "+smenu.getIe()+"("+Math.round(((double)smenu.getIe()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfbr1=new JTextField(); //2ë²ˆë¸Œë¼ìš°ì € IE
+		jtfbr1.setText("IE : "+lv.getIe()+"("+Math.round(((double)lv.getIe()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfbr1.setEditable(false);
 		jtfbr1.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbr1.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,10)); 
+		jtfbr1.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,10)); 
 		jtfbr1.setBackground(Color.WHITE);
 		
-		JTextField jtfbr2=new JTextField(); //2¹øºê¶ó¿ìÀú FireFox
-		jtfbr2.setText("FireFox : "+smenu.getFirefox()+"("+Math.round(((double)smenu.getFirefox()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfbr2=new JTextField(); //2ë²ˆë¸Œë¼ìš°ì € FireFox
+		jtfbr2.setText("FireFox : "+lv.getFirefox()+"("+Math.round(((double)lv.getFirefox()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfbr2.setEditable(false);
 		jtfbr2.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbr2.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,10)); 
+		jtfbr2.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,10)); 
 		jtfbr2.setBackground(Color.WHITE);
 		
-		JTextField jtfbr3=new JTextField(); //2¹øºê¶ó¿ìÀú Chrome
-		jtfbr3.setText("Chrome : "+smenu.getChrome()+"("+Math.round(((double)smenu.getChrome()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfbr3=new JTextField(); //2ë²ˆë¸Œë¼ìš°ì € Chrome
+		jtfbr3.setText("Chrome : "+lv.getChrome()+"("+Math.round(((double)lv.getChrome()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfbr3.setEditable(false);
 		jtfbr3.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbr3.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,10)); 
+		jtfbr3.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,10)); 
 		jtfbr3.setBackground(Color.WHITE);
 		
 		
-		JTextField jtfbr4=new JTextField(); //2¹øºê¶ó¿ìÀú Safari
-		jtfbr4.setText("Safari : "+smenu.getSafari()+"("+Math.round(((double)smenu.getSafari()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfbr4=new JTextField(); //2ë²ˆë¸Œë¼ìš°ì € Safari
+		jtfbr4.setText("Safari : "+lv.getSafari()+"("+Math.round(((double)lv.getSafari()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfbr4.setEditable(false);
 		jtfbr4.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbr4.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,10)); 
+		jtfbr4.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,10)); 
 		jtfbr4.setBackground(Color.WHITE);
 		
-		JTextField jtfbr5=new JTextField(); //2¹øºê¶ó¿ìÀú Opera
-		jtfbr5.setText("Opera : "+smenu.getOpera()+"("+Math.round(((double)smenu.getOpera()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfbr5=new JTextField(); //2ë²ˆë¸Œë¼ìš°ì € Opera
+		jtfbr5.setText("Opera : "+lv.getOpera()+"("+Math.round(((double)lv.getOpera()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfbr5.setEditable(false);
 		jtfbr5.setBorder(new LineBorder(Color.BLACK,2));
-		jtfbr5.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,10)); 
+		jtfbr5.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,10)); 
 		jtfbr5.setBackground(Color.WHITE);
 		
 		
 		
-		JTextField jtfserviceSucess=new JTextField(); //3¹ø
-		jtfserviceSucess.setText(smenu.getCode200()+"°³("+Math.round(((double)smenu.getCode200()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfserviceSucess=new JTextField(); //3ë²ˆ
+		jtfserviceSucess.setText(lv.getCode200()+"ê°œ("+Math.round(((double)lv.getCode200()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfserviceSucess.setEditable(false);
 		jtfserviceSucess.setBorder(new LineBorder(Color.BLACK,2));
-		jtfserviceSucess.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,15)); 
+		jtfserviceSucess.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,15)); 
 		jtfserviceSucess.setBackground(Color.WHITE);
-		JLabel jlblserviceSucess=new JLabel("3. ¼­ºñ½º ¼º°ø: "); //3¹ø°á°ú: ÅØ½ºÆ®
-		JLabel jlblserviceSucess1=new JLabel("¼º°øÇÑ ¼­ºñ½º(200) : "); //3¹ø°á°ú: ÅØ½ºÆ®
-		JLabel jlblserviceSucess2=new JLabel("½ÇÆÐÇÑ ¼­ºñ½º(400) : "); //3¹ø°á°ú: ÅØ½ºÆ®
+		JLabel jlblserviceSucess=new JLabel("3. ì„œë¹„ìŠ¤ ì„±ê³µ: "); //3ë²ˆê²°ê³¼: í…ìŠ¤íŠ¸
+		JLabel jlblserviceSucess1=new JLabel("ì„±ê³µí•œ ì„œë¹„ìŠ¤(200) : "); //3ë²ˆê²°ê³¼: í…ìŠ¤íŠ¸
+		JLabel jlblserviceSucess2=new JLabel("ì‹¤íŒ¨í•œ ì„œë¹„ìŠ¤(400) : "); //3ë²ˆê²°ê³¼: í…ìŠ¤íŠ¸
 		
-		JTextField jtfserviceSucess1=new JTextField(); //3¹ø_½ÇÆÐ
-		jtfserviceSucess1.setText(smenu.getCode404()+"°³("+Math.round(((double)smenu.getCode404()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfserviceSucess1=new JTextField(); //3ë²ˆ_ì‹¤íŒ¨
+		jtfserviceSucess1.setText(lv.getCode404()+"ê°œ("+Math.round(((double)lv.getCode404()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfserviceSucess1.setEditable(false);
 		jtfserviceSucess1.setBorder(new LineBorder(Color.BLACK,2));
-		jtfserviceSucess1.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,15)); 
+		jtfserviceSucess1.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,15)); 
 		jtfserviceSucess1.setBackground(Color.WHITE);
 		
-		JTextField jtfrequestTime=new JTextField(); //4¹ø
-		jtfrequestTime.setText(smenu.getMaxHourValue()+"½Ã");
+		JTextField jtfrequestTime=new JTextField(); //4ë²ˆ
+		jtfrequestTime.setText(lv.getMaxHourValue()+"ì‹œ");
 		jtfrequestTime.setEditable(false);
 		jtfrequestTime.setBorder(new LineBorder(Color.BLACK,2));
-		jtfrequestTime.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,15)); 
+		jtfrequestTime.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,15)); 
 		jtfrequestTime.setBackground(Color.WHITE);
-		JLabel jlblrequestTime=new JLabel("4. ¿äÃ»½Ã°£: "); //4¹ø°á°ú: ÅØ½ºÆ® 
+		JLabel jlblrequestTime=new JLabel("4. ìš”ì²­ì‹œê°„: "); //4ë²ˆê²°ê³¼: í…ìŠ¤íŠ¸ 
 		
-		JTextField jtfrequest403=new JTextField(); //5¹ø
-		jtfrequest403.setText(smenu.getCode403()+"°³("+Math.round(((double)smenu.getCode403()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfrequest403=new JTextField(); //5ë²ˆ
+		jtfrequest403.setText(lv.getCode403()+"ê°œ("+Math.round(((double)lv.getCode403()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfrequest403.setEditable(false);
 		jtfrequest403.setBorder(new LineBorder(Color.BLACK,2));
-		jtfrequest403.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,15)); 
+		jtfrequest403.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,15)); 
 		jtfrequest403.setBackground(Color.WHITE);
-		JLabel jlblrequest403=new JLabel("5. ¿äÃ»403: "); //¾ÆÀÌµðÅØ½ºÆ®
+		JLabel jlblrequest403=new JLabel("5. ìš”ì²­403: "); //ì•„ì´ë””í…ìŠ¤íŠ¸
 		
-		JTextField jtfrequest500=new JTextField(); //6¹ø
-		jtfrequest500.setText(smenu.getCode500()+"°³("+Math.round(((double)smenu.getCode500()/(double)smenu.getCntLine()*100.0))+"%)");
+		JTextField jtfrequest500=new JTextField(); //6ë²ˆ
+		jtfrequest500.setText(lv.getCode500()+"ê°œ("+Math.round(((double)lv.getCode500()/(double)smenu.getCntLine()*100.0))+"%)");
 		jtfrequest500.setEditable(false);
 		jtfrequest500.setBorder(new LineBorder(Color.BLACK,2));
-		jtfrequest500.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,15)); 
+		jtfrequest500.setFont(new Font("ë§‘ì€ê³ ë”•",Font.BOLD,15)); 
 		jtfrequest500.setBackground(Color.WHITE);
-		JLabel jlblrequest500=new JLabel("6. ¿äÃ»500: "); //¾ÆÀÌµðÅØ½ºÆ®
+		JLabel jlblrequest500=new JLabel("6. ìš”ì²­500: "); //ì•„ì´ë””í…ìŠ¤íŠ¸
 		
-		ImageIcon icon = new ImageIcon("C:/dev/workspace/javase_prj/src/project/result.png");//ÀÌ¹ÌÁö°´Ã¼
-		ImageIcon iconSist = new ImageIcon("C:/dev/workspace/javase_prj/src/project/sist.png");//ÀÌ¹ÌÁö°´Ã¼
-		JLabel img1=new JLabel(icon); //¾ÆÀÌµðÅØ½ºÆ®
-		JLabel img2=new JLabel(iconSist); //¾ÆÀÌµðÅØ½ºÆ®
+		ImageIcon icon = new ImageIcon("C:/dev/workspace/javase_prj/src/project/result.png");//ì´ë¯¸ì§€ê°ì²´
+		ImageIcon iconSist = new ImageIcon("C:/dev/workspace/javase_prj/src/project/sist.png");//ì´ë¯¸ì§€ê°ì²´
+		JLabel img1=new JLabel(icon); //ì•„ì´ë””í…ìŠ¤íŠ¸
+		JLabel img2=new JLabel(iconSist); //ì•„ì´ë””í…ìŠ¤íŠ¸
 		
-		JLabel bigFrame=new JLabel();//Àå½Ä¿ë Å«Æ²
+		JLabel bigFrame=new JLabel();//ìž¥ì‹ìš© í°í‹€
 		bigFrame.setBorder(new LineBorder(Color.BLACK,4));
 		
-		JLabel emphasis1=new JLabel();//¼±ÅÃÆÄÀÏÃ¢ °­Á¶¶óº§
+		JLabel emphasis1=new JLabel();//ì„ íƒíŒŒì¼ì°½ ê°•ì¡°ë¼ë²¨
 		emphasis1.setBorder(new LineBorder(Color.BLACK,3));
 		
 		JPanel jp=new JPanel();
-		jp.add(bigFrame); //Àå½Ä¿ë Å«Æ²
-		jp.add(emphasis1); //Àå½Ä¿ë Å«Æ²
-		jp.add(img1); //resultÀÌ¹ÌÁö
-		jp.add(img2); //sistÀÌ¹ÌÁö
-		jp.add(jtfViewLine); //¹üÀ§ÅÃ½ºÆ®
-		jp.add(jtfFile); //ÆÄÀÏÅÃ½ºÆ®
-		jp.add(jlblFile); //ÆÄÀÏ¶ó¹ë
-		jp.add(jtfmaxKey); //1¹øÀÔ·Â
-		jp.add(jlblmaxKey); //1¹øÃâ·Â
-		jp.add(jtfbrowseronnect);//2¹øÀÔ·Â
-		jp.add(jtfbrowseronnect1);//2¹øÀÔ·Â
-		jp.add(jtfbrowseronnect2);//2¹øÀÔ·Â
-		jp.add(jtfbrowseronnect3);//2¹øÀÔ·Â
-		jp.add(jtfbrowseronnect4);//2¹øÀÔ·Â
-		jp.add(jtfbr1);//2¹øÀÔ·Â
-		jp.add(jtfbr2);//2¹øÀÔ·Â
-		jp.add(jtfbr3);//2¹øÀÔ·Â
-		jp.add(jtfbr4);//2¹øÀÔ·Â
-		jp.add(jtfbr5);//2¹øÀÔ·Â
-		jp.add(jlblbrowseronnect);//2¹øÃâ·Â
-		jp.add(jtfserviceSucess);//3¹øÀÔ·Â
-		jp.add(jtfserviceSucess1);//3¹øÀÔ·Â
-		jp.add(jlblserviceSucess); //3¹øÃâ·Â
-		jp.add(jlblserviceSucess1); //3¹øÃâ·Â
-		jp.add(jlblserviceSucess2); //3¹øÃâ·Â
-		jp.add(jtfrequestTime); //4¹øÀÔ·Â
-		jp.add(jlblrequestTime); //4¹øÃâ·Â
-		jp.add(jtfrequest403); //5¹øÀÔ·Â
-		jp.add(jlblrequest403); //5¹øÃâ·Â
-		jp.add(jtfrequest500); //6¹øÀÔ·Â
-		jp.add(jlblrequest500); //6¹øÃâ·Â
+		jp.add(bigFrame); //ìž¥ì‹ìš© í°í‹€
+		jp.add(emphasis1); //ìž¥ì‹ìš© í°í‹€
+		jp.add(img1); //resultì´ë¯¸ì§€
+		jp.add(img2); //sistì´ë¯¸ì§€
+		jp.add(jtfViewLine); //ë²”ìœ„íƒìŠ¤íŠ¸
+		jp.add(jtfFile); //íŒŒì¼íƒìŠ¤íŠ¸
+		jp.add(jlblFile); //íŒŒì¼ë¼ë°¸
+		jp.add(jtfmaxKey); //1ë²ˆìž…ë ¥
+		jp.add(jlblmaxKey); //1ë²ˆì¶œë ¥
+		jp.add(jtfbrowseronnect);//2ë²ˆìž…ë ¥
+		jp.add(jtfbrowseronnect1);//2ë²ˆìž…ë ¥
+		jp.add(jtfbrowseronnect2);//2ë²ˆìž…ë ¥
+		jp.add(jtfbrowseronnect3);//2ë²ˆìž…ë ¥
+		jp.add(jtfbrowseronnect4);//2ë²ˆìž…ë ¥
+		jp.add(jtfbr1);//2ë²ˆìž…ë ¥
+		jp.add(jtfbr2);//2ë²ˆìž…ë ¥
+		jp.add(jtfbr3);//2ë²ˆìž…ë ¥
+		jp.add(jtfbr4);//2ë²ˆìž…ë ¥
+		jp.add(jtfbr5);//2ë²ˆìž…ë ¥
+		jp.add(jlblbrowseronnect);//2ë²ˆì¶œë ¥
+		jp.add(jtfserviceSucess);//3ë²ˆìž…ë ¥
+		jp.add(jtfserviceSucess1);//3ë²ˆìž…ë ¥
+		jp.add(jlblserviceSucess); //3ë²ˆì¶œë ¥
+		jp.add(jlblserviceSucess1); //3ë²ˆì¶œë ¥
+		jp.add(jlblserviceSucess2); //3ë²ˆì¶œë ¥
+		jp.add(jtfrequestTime); //4ë²ˆìž…ë ¥
+		jp.add(jlblrequestTime); //4ë²ˆì¶œë ¥
+		jp.add(jtfrequest403); //5ë²ˆìž…ë ¥
+		jp.add(jlblrequest403); //5ë²ˆì¶œë ¥
+		jp.add(jtfrequest500); //6ë²ˆìž…ë ¥
+		jp.add(jlblrequest500); //6ë²ˆì¶œë ¥
 		jp.setLayout(null);
 		jp.setBackground(new Color(0xF3F5F7));
 		add(jp);
 		bigFrame.setBounds(10,20,560,530);
-		img1.setBounds(0,10,300,100); //ÀÌ¹ÌÁö¶óº§
-		img2.setBounds(420,30,130,160); //ÀÌ¹ÌÁö¶óº§
-		jtfViewLine.setBounds(200,515,360,25); //¼±ÅÃÆÄÀÏ ÅØ½ºÆ®
-		jtfFile.setBounds(110,120,150,40); //¼±ÅÃÆÄÀÏ ÅØ½ºÆ®
-		jlblFile.setBounds(20,120,100,40); //¼±ÅÃÆÄÀÏ ¶óº§
-		emphasis1.setBounds(20,170,250,3); //¼±ÅÃÆÄÀÏ ¶óº§
+		img1.setBounds(0,10,300,100); //ì´ë¯¸ì§€ë¼ë²¨
+		img2.setBounds(420,30,130,160); //ì´ë¯¸ì§€ë¼ë²¨
+		jtfViewLine.setBounds(200,515,360,25); //ì„ íƒíŒŒì¼ í…ìŠ¤íŠ¸
+		jtfFile.setBounds(110,120,150,40); //ì„ íƒíŒŒì¼ í…ìŠ¤íŠ¸
+		jlblFile.setBounds(20,120,100,40); //ì„ íƒíŒŒì¼ ë¼ë²¨
+		emphasis1.setBounds(20,170,250,3); //ì„ íƒíŒŒì¼ ë¼ë²¨
 		
-		jtfmaxKey.setBounds(110,200,150,40); //1¹øÀÔ·Â
-		jlblmaxKey.setBounds(20,200,100,40); //1¹ø¶óº§
-		jtfbrowseronnect.setBounds(125,275,135,20);//2¹øÀÔ·Â
-		jtfbrowseronnect1.setBounds(125,300,135,20);//2¹øÀÔ·Â
-		jtfbrowseronnect2.setBounds(125,325,135,20);//2¹øÀÔ·Â
-		jtfbrowseronnect3.setBounds(125,350,135,20);//2¹øÀÔ·Â
-		jtfbrowseronnect4.setBounds(125,375,135,20);//2¹øÀÔ·Â
-		jlblbrowseronnect.setBounds(20,250,100,40);//2¹øÃâ·Âad
-		jtfbr1.setBounds(30,275,90,20);//2¹øÃâ·Â
-		jtfbr2.setBounds(30,300,90,20);//2¹øÃâ·Â
-		jtfbr3.setBounds(30,325,90,20);//2¹øÃâ·Â
-		jtfbr4.setBounds(30,350,90,20);//2¹øÃâ·Â
-		jtfbr5.setBounds(30,375,90,20);//2¹øÃâ·Â
-		jtfserviceSucess.setBounds(140,420,120,40);//3¹øÀÔ·Â
-		jtfserviceSucess1.setBounds(140,470,120,40);//3¹øÀÔ·Â
-		jlblserviceSucess.setBounds(20,390,100,40); //3¹ø¶óº§
-		jlblserviceSucess1.setBounds(25,420,150,40); //3¹ø¶óº§
-		jlblserviceSucess2.setBounds(25,470,150,40); //3¹ø¶óº§
-		jtfrequestTime.setBounds(400,200,150,40); //4¹øÃâ·Â
-		jlblrequestTime.setBounds(300,200,100,40); //4¹ø¶óº§
-		jtfrequest403.setBounds(400,280,150,40); //5¹øÀÔ·Â
-		jlblrequest403.setBounds(300,280,100,40); //5¹ø¶óº§
-		jtfrequest500.setBounds(400,380,150,40); //6¹øÀÔ·Â
-		jlblrequest500.setBounds(300,380,100,40); //6¹øÃâ·Â
+		jtfmaxKey.setBounds(110,200,150,40); //1ë²ˆìž…ë ¥
+		jlblmaxKey.setBounds(20,200,100,40); //1ë²ˆë¼ë²¨
+		jtfbrowseronnect.setBounds(125,275,135,20);//2ë²ˆìž…ë ¥
+		jtfbrowseronnect1.setBounds(125,300,135,20);//2ë²ˆìž…ë ¥
+		jtfbrowseronnect2.setBounds(125,325,135,20);//2ë²ˆìž…ë ¥
+		jtfbrowseronnect3.setBounds(125,350,135,20);//2ë²ˆìž…ë ¥
+		jtfbrowseronnect4.setBounds(125,375,135,20);//2ë²ˆìž…ë ¥
+		jlblbrowseronnect.setBounds(20,250,100,40);//2ë²ˆì¶œë ¥ad
+		jtfbr1.setBounds(30,275,90,20);//2ë²ˆì¶œë ¥
+		jtfbr2.setBounds(30,300,90,20);//2ë²ˆì¶œë ¥
+		jtfbr3.setBounds(30,325,90,20);//2ë²ˆì¶œë ¥
+		jtfbr4.setBounds(30,350,90,20);//2ë²ˆì¶œë ¥
+		jtfbr5.setBounds(30,375,90,20);//2ë²ˆì¶œë ¥
+		jtfserviceSucess.setBounds(140,420,120,40);//3ë²ˆìž…ë ¥
+		jtfserviceSucess1.setBounds(140,470,120,40);//3ë²ˆìž…ë ¥
+		jlblserviceSucess.setBounds(20,390,100,40); //3ë²ˆë¼ë²¨
+		jlblserviceSucess1.setBounds(25,420,150,40); //3ë²ˆë¼ë²¨
+		jlblserviceSucess2.setBounds(25,470,150,40); //3ë²ˆë¼ë²¨
+		jtfrequestTime.setBounds(400,200,150,40); //4ë²ˆì¶œë ¥
+		jlblrequestTime.setBounds(300,200,100,40); //4ë²ˆë¼ë²¨
+		jtfrequest403.setBounds(400,280,150,40); //5ë²ˆìž…ë ¥
+		jlblrequest403.setBounds(300,280,100,40); //5ë²ˆë¼ë²¨
+		jtfrequest500.setBounds(400,380,150,40); //6ë²ˆìž…ë ¥
+		jlblrequest500.setBounds(300,380,100,40); //6ë²ˆì¶œë ¥
 		
 		ResultEvt rtevt=new ResultEvt(this);
 
-		setBounds(100, 100, 600, 600);//À©µµ¿ì»çÀÌÁî
+		setBounds(100, 100, 600, 600);//ìœˆë„ìš°ì‚¬ì´ì¦ˆ
 		setVisible(true);
 		addWindowListener(rtevt);
 	}//Result
@@ -247,16 +247,16 @@ public class Result extends JDialog {
 		int temp=((int)persent/10);
 		if(persent>9) {
 		for(int i=0;i<temp;i++){
-			result+="¡Ü";
+			result+="â—";
 		}
 		for(int i=0;i<10-temp;i++){
-			result+="¡Û";
+			result+="â—‹";
 		}
 		}else {
 			if(persent !=0) {
-				result="¢Ä¡Û¡Û¡Û¡Û¡Û¡Û¡Û¡Û¡Û";
+				result="â—â—‹â—‹â—‹â—‹â—‹â—‹â—‹â—‹â—‹";
 			}else {
-				result="¡Û¡Û¡Û¡Û¡Û¡Û¡Û¡Û¡Û¡Û";
+				result="â—‹â—‹â—‹â—‹â—‹â—‹â—‹â—‹â—‹â—‹";
 			}
 		}
 		return result;
