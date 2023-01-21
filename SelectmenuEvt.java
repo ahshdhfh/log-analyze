@@ -12,285 +12,194 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.swing.JOptionPane;
 
 public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 
-	private SelectMenu sm;
-	private Login lg;
-	private LogVO lv=new LogVO();
-	private String filePath = "";//불러운 파일 경로
-	private String fName="";//불러온 파일 이름
-	private List<String> token;//방하나에 토큰 하나씩 
-	private String data;
-	private int totalCntLine;//총 호출된 횟수! ** 메서드에 사용
-	private int cntLine;
-	private int startLine;
-	private int endLine;
+	private SelectMenu sm; // select menu 객체
+	private Login lg; // 로그인클래스 겍체
+	private LogVO lv = new LogVO(); // 로그정보객체
+	private LogDecomposition ldp=new LogDecomposition(lv);  //로그분해 및 카운트 객체
 	
+	private String filePath = "";// 불러운 파일 경로
+	private String fName = "";// 불러온 파일 이름
+	private List<String> token;// 방하나에 토큰 하나씩
+	private String data; // 파일읽어온 글자들 저장할 변수
+
+	private int totalCntLine;// 총 호출된 횟수! ** 메서드에 사용
+	private int cntLine; // 읽어온 라인수 새는 변수
+	private int startLine; // 시작라인 설정할 변수
+	private int endLine; // 끝라인 설정할 변수
+
 	public String getFilePath() {
 		return filePath;
-	}
+	}// getFilePath
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
-	}
+	}// setFilePath
 
 	public String getfName() {
 		return fName;
-	}
+	}// getfName
 
 	public void setfName(String fName) {
 		this.fName = fName;
-	}
-	
+	}// setfName
+
 	public int getTotalCntLine() {
 		return totalCntLine;
-	}
+	}// getTotalCntLine
 
 	public int getCntLine() {
 		return cntLine;
-	}
+	}// getCntLine
 
+	/**
+	 * 값 초기화용 메소드 또 실행했을때 누적되는것을 방지
+	 */
 	public void resetVariable() {
-		data="";
-		cntLine=0;
-		totalCntLine=0;//총 호출된 횟수! ** 메서드에 사용
-	}//resetVariable
-	
-	public SelectmenuEvt(SelectMenu sm,Login lg) {
-		this.sm=sm;
-		this.lg=lg;
-	}//loginEvt
-	
+		data = ""; // 읽어온 스트링 값 넣는 변수
+		cntLine = 0; // 총 돌아간 라인수
+		totalCntLine = 0;// 총 호출된 횟수! ** 메서드에 사용
+	}// resetVariable
+
+	public SelectmenuEvt(SelectMenu sm, Login lg) {
+		this.sm = sm;
+		this.lg = lg;
+	}// SelectmenuEvt
+
 	@Override
 	public void windowClosing(WindowEvent we) {
-		sm.dispose();
-	}//windowClosing
-	
+		System.exit(0); // select menu 닫히면 전부 닫아버리기
+	}// windowClosing
+
 	/**
 	 * 버튼 누를시 발생하는 메서드 입력하기
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource()==sm.getJbtnView()) {
-			
-			
-			if(fName.equals("sist_input_1.log")||fName.equals("sist_input_2.log")) {
-			if(sm.getJtfLineinput().getText().equals("")) {
-				startLine=0;
-				endLine=20000;
-			}else {
-				try {
-				int index=sm.getJtfLineinput().getText().indexOf("~");		
-				startLine=Integer.parseInt(sm.getJtfLineinput().getText().substring(0,index));
-				endLine=Integer.parseInt(sm.getJtfLineinput().getText().substring(index+1,sm.getJtfLineinput().getText().length()));
-				}catch(Exception e) {
-					
-				}
-			}
-			if(endLine>startLine || endLine==startLine) {
-			try {
-				readLog();
-				System.out.println(endLine+"/"+startLine);
-				calTime();
-				System.out.println("2");
-				calMostFrequentKey();
-				System.out.println("3");
-				// max값 구하는 메소드
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			new Result(sm,this,lv);
-			}else {
-				JOptionPane.showMessageDialog(sm, "다시입력해주세요");
-			}
-			}else {
-				JOptionPane.showMessageDialog(sm, "지원하는 파일 형식이 아닙니다. 파일을 다시 선택해주세요");
-			}
-			
-		}//end if
-		
-		if(ae.getSource()==sm.getJbtnReport()) {
-			if(fName.equals("sist_input_1.log")||fName.equals("sist_input_2.log")) {
-			if(sm.getJtfLineinput().getText().equals("")) {
-				startLine=0;
-				endLine=20000;
-			}else {
-				try {
-				int index=sm.getJtfLineinput().getText().indexOf("~");		
-				startLine=Integer.parseInt(sm.getJtfLineinput().getText().substring(0,index));
-				endLine=Integer.parseInt(sm.getJtfLineinput().getText().substring(index+1,sm.getJtfLineinput().getText().length()));
-				}catch(Exception e) {
-					
-				}
-			}
-			if(endLine>startLine || endLine==startLine) {
-			if(lg.getId().equals("root")) {
-				JOptionPane.showMessageDialog(sm, "문서를 생성할 수 있는 권한이 없음");
-			}else {
-				try {
-					readLog();
-					calTime();
-					calMostFrequentKey();
-					showResult();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			}else {
-				JOptionPane.showMessageDialog(sm, "다시입력해주세요");
-			}
-			}else {
-				JOptionPane.showMessageDialog(sm, "지원하는 파일 형식이 아닙니다. 파일을 다시 선택해주세요");
-			}
-		}//end if
-		
-		if(ae.getSource()==sm.getJbtnFileSelect()) {
-			FileDialog fdOpen=new FileDialog(sm, "파일 열기", FileDialog.LOAD);
-			fdOpen.setVisible(true);
-			filePath=fdOpen.getDirectory();
-			fName=fdOpen.getFile();
-			sm.JtextFilememo(fName);
-		}//end if
-	}//actionPerformed
-	
-	
-	public void readLog() throws IOException {
-		lv.resetVariable();//시작전 iv 초기화
-		resetVariable();//시작전 iv 초기화
-		if (filePath != null) {
 
-			File file = new File(filePath+fName);		
-			
-				BufferedReader br = null;
-				try {
-					br = new BufferedReader(new FileReader(file));
-					token=new ArrayList<String>();
-					int i=0;
-					while ((data = br.readLine()) != null) {
-						totalCntLine++;  
-						
-						if(totalCntLine>=startLine && totalCntLine<=endLine) {
-							cntLine++;
-						i=0;
-						StringTokenizer stk = new StringTokenizer(data, "][");
-						while(stk.hasMoreTokens()) {
-							token.add(i,  stk.nextToken());
-							i++;	
-						}//end while			
-						if(!token.isEmpty()) {
-							cntCode(token.get(0));
-							countKey(token.get(1));
-							countBrowser(token.get(2));
-							calMostFrequentHour(token.get(3));
-						}//end if						
-						}
-					}//end while					
-				} finally {
-					if (br != null) {br.close();
-					}//end if
-				}//end finally
+		if (ae.getSource() == sm.getJbtnView()) { // view 버튼이 눌리면
+			if (fName.equals("sist_input_1.log") || fName.equals("sist_input_2.log")) { // 파일이 지원하는 파일인지
+				lineCheck(); //원하는 라인입력값확인
+				if ((endLine > startLine || endLine == startLine)&&(startLine>-1 && endLine>-1)) { // 라인수 형식이 맞는지 검사 맞으면 돌아가게
+					try {
+						readLog(); // 파일 읽기
+						ldp.calTime(); // 가장 많이 호출된 시간계산
+						ldp.calMostFrequentKey(); // 가장 많이 사용된 키값 계산
+					} catch (IOException e) {
+						e.printStackTrace();
+					} // end catch
+					new Result(sm, this, lv); // result 창 띄우기
+				} else {
+					JOptionPane.showMessageDialog(sm, "라인 수를 다시입력해주세요"); // 라인수 형식이 맞지 않음
+				} // end else
+			} else {
+				JOptionPane.showMessageDialog(sm, "지원하는 파일 형식이 아닙니다. 파일을 다시 선택해주세요"); // 지원하는 파일 형식이 아님
+			} // end else
+
 		} // end if
-	}//read
 
-	
-
-	/**
-	 * 1번 문제 
-	 * 가장많이 나온 key 찾아내는 메서드
-	 */
-	public void countKey(String token) {
-		int values = 0;
-			if(token.indexOf("&")!=-1) {
-				token=token.substring(token.indexOf("key=")+4,token.indexOf("&"));
-			}else {
-//				System.out.println(1);
-			}
-			if (!(lv.getKey().containsKey(token))) {// 키가 없으면?
-				lv.getKey().put(token, 1);// 새로운 키, 값을 설정
-			} else if (lv.getKey().containsKey(token)) {// 키가 있을때
-				values = lv.getKey().get(token);// 현재 저장된 값을 빼주기
-				values += 1;// 값에 1 카운트
-				lv.getKey().put(token, values);// 카운팅 된 값을 넣기
-			} // end else if
-	}//calMostFrequentKey
-	
-	public void calMostFrequentKey() {
-		lv.setMostFrequentKey("");
-		int maxValue = Collections.max(lv.getKey().values());
-		//key7에 카운트된 값들중 collections.max을 통해 가장 많이 카운트된 횟수를 도출한다.
-		for (String r : lv.getKey().keySet()) {//key에 key1을 통해 얻은 모든 키를 얻는다.
-			if (lv.getKey().get(r) == maxValue) {//key의 키값 중 가장 많은 횟수를 얻은 키가 있을 경우
-				lv.setMostFrequentKey(r+"");//그 "키값을 최다사용 키"로 지정한다.
-				lv.setMostFrequentKeyV(maxValue);
-				break;     
-			} // end if
-		} // end for
-	}// calMostFrequentKey
-	
-
-	
-	/**
-	 * 2번문제
-	 * 브라우저별 접속 횟수, 비율구하기
-	 */
-	public void countBrowser(String token) {
-		if(token.equals("ie")) {
-			lv.setIe(lv.getIe()+1);
-		}else if(token.equals("Chrome")){
-			lv.setChrome(lv.getChrome()+1);
-		}else if(token.equals("firefox")){
-			lv.setFirefox(lv.getFirefox()+1);
-		}else if(token.equals("opera")){
-			lv.setOpera(lv.getOpera()+1);
-		}else if(token.equals("Safari")) {
-			lv.setSafari(lv.getSafari()+1);
-		}		
-	}// countBowser
-	
-	/**
-	 * 3번, 5번, 6번문제
-	 * @param token
-	 */
-	public void cntCode(String token) {
-		switch (Integer.parseInt(token)) {
-		case 200:	lv.setCode200(lv.getCode200()+1);	break;
-		case 403:lv.setCode403(lv.getCode403()+1);	break;
-		case 404:	lv.setCode404(lv.getCode404()+1);	break;
-		case 500:	lv.setCode500(lv.getCode500()+1);	break;
-		}//end switch
-	}//cntCode
-	
-	/**
-	 * 4번문제
-	 * 가장많이 접속한 시간 찾는 메서드 
-	 */
-	public void calTime() {
-		for(int h=1;h<lv.getHour().length;h++) {
-			if(lv.getHour()[h]>lv.getHour()[h-1]) {
-				lv.setMaxHourValue(h);
-		}//end if
-		}//end for
-	} //calTIme
 		
-	public void calMostFrequentHour(String token) {
-		/**
-		 * 4번문제
-		 * 가장많이 접속한 시간 찾는 메서드 
-		 */
-		token =token.substring(11, 13);
-		int num=Integer.parseInt(token);
-		lv.getHour()[num]++;
-		
-		} //calMostFrequentHour
+		if (ae.getSource() == sm.getJbtnReport()) { // 레포트 버튼이 눌리면
+			if (fName.equals("sist_input_1.log") || fName.equals("sist_input_2.log")) { // 파일이 지원하는 형식인지
+				lineCheck();//원하는 라인입력값확인
+				if ((endLine > startLine || endLine == startLine)&&(startLine>-1 && endLine>-1)) { // 라인입력값 형식이 맞는지
+					if (lg.getId().equals("root")) {
+						JOptionPane.showMessageDialog(sm, "문서를 생성할 수 있는 권한이 없음");
+					} else {
+						try {
+							readLog();// 파일 읽기
+							ldp.calTime();// 가장 많이 호출된 시간계산
+							ldp.calMostFrequentKey(); // 가장 많이 사용된 키값 계산
+							showResult(); // 파일을 만들 메소드
+						} catch (IOException e) {
+							e.printStackTrace();
+						} // end catch
+					} // end else
+				} else {
+					JOptionPane.showMessageDialog(sm, "라인 수를 다시입력해주세요"); // 라인수 형식이 맞지 않음
+				} // end else
+			} else {
+				JOptionPane.showMessageDialog(sm, "지원하는 파일 형식이 아닙니다. 파일을 다시 선택해주세요");// 지원하는 파일 형식이 아님
+			} // end else
+		} // end if
+
+		if (ae.getSource() == sm.getJbtnFileSelect()) { // 파일선택 버튼이 눌리면
+			FileDialog fdOpen = new FileDialog(sm, "파일 열기", FileDialog.LOAD); // 파일 DIalog 열기
+			fdOpen.setVisible(true); // 다이얼로그가 보이게 디폴트 값이 false임으로 true로 선언해줘야함
+			filePath = fdOpen.getDirectory(); // 파일골랐으면 경로값 저장
+			fName = fdOpen.getFile(); // 파일골랐으면 파일 이름값 저장
+			sm.JtextFilememo(fName); // 파일이름을 사용자가 고른 파일이름으로 텍스트창에 보여주기
+		} // end if
+	}// actionPerformed
+	
+	public void lineCheck() {
+		if (sm.getJtfLineinput().getText().equals("")) { // 라인입력 값이 없으면
+			startLine = 0; // 디폴트값 0넣기
+			endLine = 20000;// 디폴트값 20000 넣기
+		} else {
+			try {
+				int index = sm.getJtfLineinput().getText().indexOf("~"); // ~표시 찾아서 인덱스 값을 변수에 넣기
+				startLine = Integer.parseInt(sm.getJtfLineinput().getText().substring(0, index)); // start 짜르기
+				endLine = Integer.parseInt(sm.getJtfLineinput().getText().substring(index + 1,
+						sm.getJtfLineinput().getText().length())); // end 짜르기
+			} catch (Exception e) { //사용자가 숫자입력안해서 parseInt가 안먹으면 에러가 나고 에러나면 -1로 세팅해라
+				startLine=-1;
+				endLine =-1;
+			} // end catch
+		} // end else
+	}//lineCheck
+	
+
+	/**
+	 * 파일 읽어오는 메소드
+	 * 
+	 * @throws IOException
+	 */
+	public void readLog() throws IOException {
+		lv.resetVariable();// 시작전 iv 초기화 누를때마다 계속 쌓이는걸 방지
+		resetVariable();// 시작전 iv 초기화 누를때마다 계속 쌓이는걸 방지
+		if (filePath != null) { // 파일을 골랐는지? 안골랐으면 실행안되게 하고 메시지 띄움 골르라고
+
+			File file = new File(filePath + fName); // 파일을 읽어오기 위해 경로 설정할 file객체생성
+
+			BufferedReader br = null; // BufferedReader 객체 변수명 설정
+			try {
+				br = new BufferedReader(new FileReader(file)); // BufferedReader에 경로 설정한 file객체 매개변수로 넣기
+				token = new ArrayList<String>(); // 로그를 토큰으로 자르기 위해 선언
+				int i = 0;
+				while ((data = br.readLine()) != null) {
+					totalCntLine++;
+
+					if (totalCntLine >= startLine && totalCntLine <= endLine) {
+						cntLine++;
+						i = 0; // [200]=0 [key]=1 [ie]=2 [날짜]=3
+						StringTokenizer stk = new StringTokenizer(data, "]["); // 로그를 ][ 기준으로 자르기
+						while (stk.hasMoreTokens()) { // 토큰이 없으면 while 끝내기
+							token.add(i, stk.nextToken()); // 토큰 자를때마다 저장
+							i++; // i++하면서 토큰에 값 넣기
+						} // end while
+						if (!token.isEmpty()) { // 토큰이 없으면 메소드 실행 못하게
+							ldp.cntCode(token.get(0)); // code카운트 메소드
+							ldp.countKey(token.get(1)); // 키값 카운터메소드
+							ldp.countBrowser(token.get(2));// 브라우저 카운트메소드
+							ldp.calMostFrequentHour(token.get(3));// 시간 카운트메소드
+						} // end if
+					}
+				} // end while
+			} finally {
+				if (br != null) {
+					br.close(); // 파일 닫기
+				} // end if
+			} // end finally
+		} // end if
+	}// read
 
 	/**
 	 * 8번문제 1~7번 결과 다이얼로그로 보여주기 report생성 버튼이 클릭되면 c:/dev/report폴더를 생성한 후
@@ -298,39 +207,38 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	 * report_1628605156919.dat
 	 */
 	public void showResult() throws IOException {
-		Date date = new Date();
-		File dir = new File("C:/dev/report");
-		if (!dir.exists()) {
+		Date date = new Date(); // 시간나타낼 객체생성
+		File dir = new File("C:/dev/report"); // 파일을 여기다가 저장
+		if (!dir.exists()) { // 디렉토리 없니?
 			dir.mkdirs();// 디렉토리 생성
 		} // end if
 
-		BufferedWriter bw = null;
-		File saveFile = new File(dir.getAbsolutePath() + "/report_" + date.getTime() + ".dat");
+		BufferedWriter bw = null; // BufferedWriter
+		File saveFile = new File(dir.getAbsolutePath() + "/report_" + date.getTime() + ".dat"); // 파일이름설정
 		try {
-			bw = new BufferedWriter(new FileWriter(saveFile));
+			bw = new BufferedWriter(new FileWriter(saveFile)); // 해당 파일이름으로 저장해라
 
-			bw.write("1번\n가장많이 접속한 브라우저 : "+lv.getMostFrequentKey()+", 횟수 : "+lv.getMostFrequentKeyV()+"\n");//1번문제
-			bw.write("2번\nIE : "+lv.getIe()+"("+Math.round(((double)lv.getIe()/(double)getCntLine()*100.0))+"%)"//2번문제
-					+", FireFox : "+lv.getFirefox()+"("+Math.round(((double)lv.getFirefox()/(double)getCntLine()*100.0))+"%)"
-					+", Chrome : "+lv.getChrome()+"("+Math.round(((double)lv.getChrome()/(double)getCntLine()*100.0))+"%)"
-					+", Safari : "+lv.getSafari()+"("+Math.round(((double)lv.getSafari()/(double)getCntLine()*100.0))+"%)"
-					+", Opera : "+lv.getOpera()+"("+Math.round(((double)lv.getOpera()/(double)getCntLine()*100.0))+"%)\n"
-					);
-			bw.write("3번\n성공 횟수(200) : "+lv.getCode200()+", 실패 횟수(404) : "+ lv.getCode404() + "\n" );//3번문제
-			bw.write("4번\n요청이 가장 많은 시간대: "+lv.getMaxHourValue()+"시\n");//4번문제
-			bw.write("5번\n비정상적인 요청 (403)" + lv.getCode403()+ "번, 비율 : "+ lv.getCode403()+"%\n");//5번문제
-			bw.write("6번\n요청에 대한 에러 (500)" + lv.getCode500()+ "번, 비율 : "+ lv.getCode500()+"%\n");//6번문제
+			bw.write("1번\n가장많이 접속한 브라우저 : " + lv.getMostFrequentKey() + ", 횟수 : " + lv.getMostFrequentKeyV() + "\n");// 1번문제
+			bw.write("2번\nIE : " + lv.getIe() + "(" + Math.round(((double) lv.getIe() / (double) getCntLine() * 100.0))
+					+ "%)"// 2번문제
+					+ ", FireFox : " + lv.getFirefox() + "("
+					+ Math.round(((double) lv.getFirefox() / (double) getCntLine() * 100.0)) + "%)" + ", Chrome : "
+					+ lv.getChrome() + "(" + Math.round(((double) lv.getChrome() / (double) getCntLine() * 100.0))
+					+ "%)" + ", Safari : " + lv.getSafari() + "("
+					+ Math.round(((double) lv.getSafari() / (double) getCntLine() * 100.0)) + "%)" + ", Opera : "
+					+ lv.getOpera() + "(" + Math.round(((double) lv.getOpera() / (double) getCntLine() * 100.0))
+					+ "%)\n");
+			bw.write("3번\n성공 횟수(200) : " + lv.getCode200() + ", 실패 횟수(404) : " + lv.getCode404() + "\n");// 3번문제
+			bw.write("4번\n요청이 가장 많은 시간대: " + lv.getMaxHourValue() + "시\n");// 4번문제
+			bw.write("5번\n비정상적인 요청 (403)" + lv.getCode403() + "번, 비율 : " + Math.round(((double) lv.getCode403() / (double) getCntLine() * 100.0)) + "%\n");// 5번문제
+			bw.write("6번\n요청에 대한 에러 (500)" + lv.getCode500() + "번, 비율 : " + Math.round(((double) lv.getCode500() / (double) getCntLine() * 100.0)) + "%\n");// 6번문제
 			bw.flush();// 분출
 
 		} finally {
 			if (bw != null) {
-				bw.close();
+				bw.close(); // 닫기
 			} // 스트림에 남아있는 내용을 목적지로 분출(flush)하고 연결을 끊는다.
-		} // end finallyy
-	}//showResult
-	
-}//class
+		} // end finally
+	}// showResult
 
-
-
-
+}// class
