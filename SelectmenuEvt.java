@@ -19,17 +19,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import javax.imageio.plugins.tiff.ExifGPSTagSet;
 import javax.swing.JOptionPane;
 
 public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 
 	private SelectMenu sm;
 	private Login lg;
-	String filePath = "C:/dev/workspace/javase_prj/src/project/";//프로젝트\1차\SIST_ANAL_01요구사항정의서;//불러운 파일 경로
-	String fName="";//불러온 파일 이름
-	String logTxtCreationDate;//로그파일 날짜 기록용
-	String[] browser;//사용된 브라우저 기록용 배열
+	private LogVO lv=new LogVO();
+	private String filePath = "";//불러운 파일 경로
+	private String fName="";//불러온 파일 이름
+	private List<String> token;//방하나에 토큰 하나씩 
+	private String data;
+	private int totalCntLine;//총 호출된 횟수! ** 메서드에 사용
+	private int cntLine;
+	private int startLine;
+	private int endLine;
+	
 	public String getFilePath() {
 		return filePath;
 	}
@@ -45,72 +50,7 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	public void setfName(String fName) {
 		this.fName = fName;
 	}
-
-	String[] log;//각 방 하나에 로그 한줄씩 
-	//ex)[200][http://sist.co.kr/find/new?key=res&query=sist][ie][2023-01-16 11:11:43]
-	List<String> token;//방하나에 토큰 하나씩 
-	//ex) [200, [500
 	
-	private String data;
-	private int totalCntLine;//총 호출된 횟수! ** 메서드에 사용
-	private int cntLine;
-	private int maxHourValue;//시간
-	int[] hour= new int[24];
-	
-	Map<String, Integer>key=new HashMap<String, Integer>(); //1번 테스트
-	
-
-	private int ie;//브라우저 카운트
-	private int firefox;//브라우저 카운트
-	private int opera;//브라우저 카운트
-	private int chrome;//브라우저 카운트
-	private int safari;//브라우저 카운트
-	
-	private int code200;//코드 200이 나온 횟수
-	private int code404;//코드 404이 나온 횟수
-	private int code403;//코드 403이 나온 횟수
-	private int code500;//코드 403이 나온 횟수
-	private int startLine;
-	private int endLine;
-	
-	private String mostFrequentHour;//가장 요청이 많은 시간
-	private String mostFrequentKey;//가장 요청이 많은 키
-	private int mostFrequentKeyV;//가장 요청이 많은 키의 값
-	
-	public int getOpera() {
-		return opera;
-	}
-
-	public void setOpera(int opera) {
-		this.opera = opera;
-	}
-
-	public int getIe() {
-		return ie;
-	}
-
-	public int getFirefox() {
-		return firefox;
-	}
-
-	public int getChrome() {
-		return chrome;
-	}
-
-	public int getSafari() {
-		return safari;
-	}	
-	
-//	Map<String, Integer >mapHour;
-	
-	public String[] getBrowser() {
-		return browser;
-	}
-
-	public void setBrowser(String[] browser) {
-		this.browser = browser;
-	}
-
 	public int getTotalCntLine() {
 		return totalCntLine;
 	}
@@ -119,83 +59,12 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		return cntLine;
 	}
 
-	public int getCode200() {
-		return code200;
-	}
-
-	public void setCode200(int code200) {
-		this.code200 = code200;
-	}
-
-	public int getCode404() {
-		return code404;
-	}
-
-	public void setCode404(int code404) {
-		this.code404 = code404;
-	}
-
-	public int getCode403() {
-		return code403;
-	}
-
-	public void setCode403(int code403) {
-		this.code403 = code403;
-	}
-
-	public int getCode500() {
-		return code500;
-	}
-
-	public void setCode500(int code500) {
-		this.code500 = code500;
-	}
-
-	
-	public String getMostFrequentHour() {
-		return mostFrequentHour;
-	}
-
-	public String getMostFrequentKey() {
-		return mostFrequentKey;
-	}
-
-	public int getMaxHourValue() {
-		return maxHourValue;
-	}
-
-
-	
 	public void resetVariable() {
 		data="";
-		code200=0;//코드 200이 나온 횟수
-		code404=0;//코드 404이 나온 횟수
-		code403=0;//코드 403이 나온 횟수
-		code500=0;//코드 403이 나온 횟수
-		
-		mostFrequentHour="";//가장 요청이 많은 시간
-		mostFrequentKey="";//가장 요청이 많은 키
-		mostFrequentKeyV=0;//가장 요청이 많은 키의 값
-		
-		ie=0;//브라우저 카운트
-		firefox=0;//브라우저 카운트
-		opera=0;//브라우저 카운트
-		chrome=0;//브라우저 카운트
-		safari=0;//브라우저 카운트
-		
 		cntLine=0;
 		totalCntLine=0;//총 호출된 횟수! ** 메서드에 사용
-		
-		maxHourValue=0;
-		hour= new int[24];
-		
-		key=new HashMap<String, Integer>();
-	}
+	}//resetVariable
 	
-	public int getMostFrequentKeyV() {
-		return mostFrequentKeyV;
-	}
-
 	public SelectmenuEvt(SelectMenu sm,Login lg) {
 		this.sm=sm;
 		this.lg=lg;
@@ -239,7 +108,7 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			new Result(sm,this);
+			new Result(sm,this,lv);
 			}else {
 				JOptionPane.showMessageDialog(sm, "다시입력해주세요");
 			}
@@ -295,17 +164,8 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	
 	
 	public void readLog() throws IOException {
+		lv.resetVariable();//시작전 iv 초기화
 		resetVariable();//시작전 iv 초기화
-//		if(sm.getJtfLineinput().getText().equals("")) {
-//			startLine=0;
-//			endLine=20000;
-//		}else {
-//			int index=sm.getJtfLineinput().getText().indexOf("~");		
-//			startLine=Integer.parseInt(sm.getJtfLineinput().getText().substring(0,index));
-//			endLine=Integer.parseInt(sm.getJtfLineinput().getText().substring(index+1,sm.getJtfLineinput().getText().length()));
-//		}
-		
-//		fName = sm.getJtfFileNameInput().getText()+"";
 		if (filePath != null) {
 
 			File file = new File(filePath+fName);		
@@ -354,23 +214,23 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 			}else {
 //				System.out.println(1);
 			}
-			if (!(key.containsKey(token))) {// 키가 없으면?
-				key.put(token, 1);// 새로운 키, 값을 설정
-			} else if (key.containsKey(token)) {// 키가 있을때
-				values = key.get(token);// 현재 저장된 값을 빼주기
+			if (!(lv.getKey().containsKey(token))) {// 키가 없으면?
+				lv.getKey().put(token, 1);// 새로운 키, 값을 설정
+			} else if (lv.getKey().containsKey(token)) {// 키가 있을때
+				values = lv.getKey().get(token);// 현재 저장된 값을 빼주기
 				values += 1;// 값에 1 카운트
-				key.put(token, values);// 카운팅 된 값을 넣기
+				lv.getKey().put(token, values);// 카운팅 된 값을 넣기
 			} // end else if
 	}//calMostFrequentKey
 	
 	public void calMostFrequentKey() {
-		mostFrequentKey="";
-		int maxValue = Collections.max(key.values());
+		lv.setMostFrequentKey("");
+		int maxValue = Collections.max(lv.getKey().values());
 		//key7에 카운트된 값들중 collections.max을 통해 가장 많이 카운트된 횟수를 도출한다.
-		for (String r : key.keySet()) {//key에 key1을 통해 얻은 모든 키를 얻는다.
-			if (key.get(r) == maxValue) {//key의 키값 중 가장 많은 횟수를 얻은 키가 있을 경우
-				mostFrequentKey = r+"";//그 "키값을 최다사용 키"로 지정한다.
-				mostFrequentKeyV=maxValue;
+		for (String r : lv.getKey().keySet()) {//key에 key1을 통해 얻은 모든 키를 얻는다.
+			if (lv.getKey().get(r) == maxValue) {//key의 키값 중 가장 많은 횟수를 얻은 키가 있을 경우
+				lv.setMostFrequentKey(r+"");//그 "키값을 최다사용 키"로 지정한다.
+				lv.setMostFrequentKeyV(maxValue);
 				break;     
 			} // end if
 		} // end for
@@ -384,25 +244,17 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	 */
 	public void countBrowser(String token) {
 		if(token.equals("ie")) {
-			this.ie++;
+			lv.setIe(lv.getIe()+1);
 		}else if(token.equals("Chrome")){
-			this.chrome++;
+			lv.setChrome(lv.getChrome()+1);
 		}else if(token.equals("firefox")){
-			this.firefox++;
+			lv.setFirefox(lv.getFirefox()+1);
 		}else if(token.equals("opera")){
-			this.opera++;
+			lv.setOpera(lv.getOpera()+1);
 		}else if(token.equals("Safari")) {
-			this.safari++;
-		}
-
-		
+			lv.setSafari(lv.getSafari()+1);
+		}		
 	}// countBowser
-	
-	
-	
-	
-//	Iterator<String> iterator;
-	
 	
 	/**
 	 * 3번, 5번, 6번문제
@@ -410,10 +262,10 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	 */
 	public void cntCode(String token) {
 		switch (Integer.parseInt(token)) {
-		case 200:	code200++;		break;
-		case 403:	code403++;		break;
-		case 404:	code404++;		break;
-		case 500:	code500++;		break;
+		case 200:	lv.setCode200(lv.getCode200()+1);	break;
+		case 403:lv.setCode403(lv.getCode403()+1);	break;
+		case 404:	lv.setCode404(lv.getCode404()+1);	break;
+		case 500:	lv.setCode500(lv.getCode500()+1);	break;
 		}//end switch
 	}//cntCode
 	
@@ -422,11 +274,11 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	 * 가장많이 접속한 시간 찾는 메서드 
 	 */
 	public void calTime() {
-		for(int h=1;h<hour.length;h++) {
-			if(hour[h]>hour[h-1]) {
-				maxHourValue=h;
-		}
-		}
+		for(int h=1;h<lv.getHour().length;h++) {
+			if(lv.getHour()[h]>lv.getHour()[h-1]) {
+				lv.setMaxHourValue(h);
+		}//end if
+		}//end for
 	} //calTIme
 		
 	public void calMostFrequentHour(String token) {
@@ -436,7 +288,7 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		 */
 		token =token.substring(11, 13);
 		int num=Integer.parseInt(token);
-		hour[num]++;
+		lv.getHour()[num]++;
 		
 		} //calMostFrequentHour
 
@@ -457,17 +309,17 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		try {
 			bw = new BufferedWriter(new FileWriter(saveFile));
 
-			bw.write("1번\n가장많이 접속한 브라우저 : "+getMostFrequentKey()+", 횟수 : "+getMostFrequentKeyV()+"\n");//1번문제
-			bw.write("2번\nIE : "+getIe()+"("+Math.round(((double)getIe()/(double)getCntLine()*100.0))+"%)"//2번문제
-					+", FireFox : "+getFirefox()+"("+Math.round(((double)getFirefox()/(double)getCntLine()*100.0))+"%)"
-					+", Chrome : "+getChrome()+"("+Math.round(((double)getChrome()/(double)getCntLine()*100.0))+"%)"
-					+", Safari : "+getSafari()+"("+Math.round(((double)getSafari()/(double)getCntLine()*100.0))+"%)"
-					+", Opera : "+getOpera()+"("+Math.round(((double)getOpera()/(double)getCntLine()*100.0))+"%)\n"
+			bw.write("1번\n가장많이 접속한 브라우저 : "+lv.getMostFrequentKey()+", 횟수 : "+lv.getMostFrequentKeyV()+"\n");//1번문제
+			bw.write("2번\nIE : "+lv.getIe()+"("+Math.round(((double)lv.getIe()/(double)getCntLine()*100.0))+"%)"//2번문제
+					+", FireFox : "+lv.getFirefox()+"("+Math.round(((double)lv.getFirefox()/(double)getCntLine()*100.0))+"%)"
+					+", Chrome : "+lv.getChrome()+"("+Math.round(((double)lv.getChrome()/(double)getCntLine()*100.0))+"%)"
+					+", Safari : "+lv.getSafari()+"("+Math.round(((double)lv.getSafari()/(double)getCntLine()*100.0))+"%)"
+					+", Opera : "+lv.getOpera()+"("+Math.round(((double)lv.getOpera()/(double)getCntLine()*100.0))+"%)\n"
 					);
-			bw.write("3번\n성공 횟수(200) : "+getCode200()+", 실패 횟수(404) : "+ getCode404() + "\n" );//3번문제
-			bw.write("4번\n요청이 가장 많은 시간대: "+getMaxHourValue()+"시\n");//4번문제
-			bw.write("5번\n비정상적인 요청 (403)" + getCode403()+ "번, 비율 : "+ getCode403()+"%\n");//5번문제
-			bw.write("6번\n요청에 대한 에러 (500)" + getCode500()+ "번, 비율 : "+ getCode500()+"%\n");//6번문제
+			bw.write("3번\n성공 횟수(200) : "+lv.getCode200()+", 실패 횟수(404) : "+ lv.getCode404() + "\n" );//3번문제
+			bw.write("4번\n요청이 가장 많은 시간대: "+lv.getMaxHourValue()+"시\n");//4번문제
+			bw.write("5번\n비정상적인 요청 (403)" + lv.getCode403()+ "번, 비율 : "+ lv.getCode403()+"%\n");//5번문제
+			bw.write("6번\n요청에 대한 에러 (500)" + lv.getCode500()+ "번, 비율 : "+ lv.getCode500()+"%\n");//6번문제
 			bw.flush();// 분출
 
 		} finally {
@@ -475,8 +327,9 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 				bw.close();
 			} // 스트림에 남아있는 내용을 목적지로 분출(flush)하고 연결을 끊는다.
 		} // end finallyy
-	}
-}
+	}//showResult
+	
+}//class
 
 
 
