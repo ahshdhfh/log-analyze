@@ -1,15 +1,7 @@
 package project;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.util.Hashtable;
-import java.util.Map;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,97 +13,83 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class Login extends JFrame {
 
-		private JTextField jtfId;
-		private JPasswordField jpfPass;
-		private String id;
+	private JTextField jtfId; // idë¥¼ ì…ë ¥ë°›ì„ ì•„ì´ë””ì°½
+	private JPasswordField jpfPass; // passwordë¥¼ ì…ë ¥ë°›ì„ íŒ¨ìŠ¤ì›Œë“œì°½
+	private String id; // ì…ë ¥í•œ id ê°’
 
-	
 	public String getId() {
-			return id;
-		}
+		return id;
+	}// getId
 
-		public void setId(String id) {
-			this.id = id;
-		}
-
+	public void setId(String id) {
+		this.id = id;
+	}// setId
 
 	public JTextField getJtfId() {
-			return jtfId;
-		}
+		return jtfId;
+	}// getJtfId
 
+	public void setJtfId(JTextField jtfId) {
+		this.jtfId = jtfId;
+	}// setJtfId
 
-		public void setJtfId(JTextField jtfId) {
-			this.jtfId = jtfId;
-		}
+	public JTextField getJpfPass() {
+		return jpfPass;
+	}// getJpfPass
 
-
-		public JTextField getJpfPass() {
-			return jpfPass;
-		}
-
-
-		public void setJpfPass(JPasswordField jpfPass) {
-			this.jpfPass = jpfPass;
-		}
-
+	public void setJpfPass(JPasswordField jpfPass) {
+		this.jpfPass = jpfPass;
+	}// setJpfPass
 
 	public Login() {
-		
+
 		super("Login Page");
-		JLabel jlblinfo=new JLabel("<html><body>¾È³çÇÏ¼¼¿ä<br>" + "<strong>4Á¶ ·Î±×ºĞ¼®<strong> ÇÁ·Î±×·¥ÀÔ´Ï´Ù.</body></html>"); //¼³¸í¶óº§
-		jlblinfo.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,20)); //
-		jtfId=new JTextField(); //¾ÆÀÌµğÀÔ·ÂÃ¢
-		JLabel jlblId=new JLabel("ID"); //¾ÆÀÌµğÅØ½ºÆ®
-		jtfId.setBorder(new LineBorder(Color.BLACK,2));
-		jlblId.setFont(new Font("¸¼Àº°íµñ",Font.ITALIC,12)); //¾ÆÀÌµğ¶óº§ ÆùÆ®
-		jlblId.setForeground(Color.BLACK); //¾ÆÀÌµğ¶óº§ »ö±ò
-		
-		jpfPass=new JPasswordField("ºñ¹Ğ¹øÈ£"); //ÆĞ½º¿öµåÀÔ·ÂÃ¢
-		jpfPass.setBorder(new LineBorder(Color.BLACK,2));
-		jpfPass.setText("");
-		JLabel jlblPw=new JLabel("Password"); //ÆĞ½º¿öµåÅØ½ºÆ®
-		jlblPw.setFont(new Font("¸¼Àº°íµñ",Font.ITALIC,12)); //ÆĞ½º¿öµå¶óº§ ÆùÆ®
-		
-		JButton jbtnlogin=new JButton("·Î±×ÀÎ ÇÏ±â"); //·Î±×ÀÎ¹öÆ° 
-		jbtnlogin.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,23));//·Î±×ÀÎ¹öÆ° ÆùÆ®
-		jbtnlogin.setBackground(new Color(0x5929D0)); //·Î±×ÀÎ¹öÆ° »ö»ó
-		jbtnlogin.setForeground(Color.WHITE);
-		jbtnlogin.setBorder(new LineBorder(Color.BLACK,2));
-		
-		ImageIcon icon = new ImageIcon("E:/dev/workspace/javase_prj/src/project/as.jpg");//ÀÌ¹ÌÁö°´Ã¼ 
-		//JPanel¿¡ Ãß°¡
-//		JPanel jp=new JPanel() {
-//			public void paintComponent(Graphics g) {//±×¸®´Â ÇÔ¼ö
-//				g.drawImage(icon.getImage(), 100,250,200,50,null);//background¸¦ ±×·ÁÁÜ		
-//				setOpaque(false); //Åõ¸íÈ­
-//				super.paintComponent(g);
-//			}
-//		};
-		JPanel jp=new JPanel();
-		jp.setBackground(new Color(0xF3F5F7));
-		jp.setLayout(null);	//3. ¹èÄ¡°ü¸®ÀÚ ¼³Á¤
-		//4.¹èÄ¡
-		jlblinfo.setBounds(100, 70, 300, 50); //
-		jlblId.setBounds(100, 140, 300, 30); //·Î±×ÀÎÅØ½ºÆ®
-		jtfId.setBounds(100, 170, 300, 40); //·Î±×ÀÎÀÔ·ÂÃ¢
-		jlblPw.setBounds(100, 220, 300, 30); //ÆĞ½º¿öµåÅØ½ºÆ®
-		jpfPass.setBounds(100, 250, 300, 40);//ÆĞ½º¿öµå ÀÔ·ÂÃ¢
-		jbtnlogin.setBounds(100,350,300,40); //·Î±×ÀÎ¹öÆ° 
-		
-		jp.add(jlblId);	//¾ÆÀÌµğ¶óº§
-		jp.add(jtfId);	//¾ÆÀÌµğÀÔ·ÂÃ¢
-		jp.add(jpfPass);	//ÆĞ½º¿öµåÀÔ·ÂÃ¢
-		jp.add(jlblPw);	//ÆĞ½º¿öµå¶óº§
-		jp.add(jbtnlogin); //·Î±×ÀÎÀÔ·Â¹öÆ° 
-		jp.add(jlblinfo); //·Î±×ÀÎÀÔ·Â¹öÆ° 
-		
-		add(jp); //JPanelÃß°¡
-		LoginEvt lgevt=new LoginEvt(this); //ÀÌº¥Æ® °´Ã¼ »ı¼º
-		jbtnlogin.addActionListener(lgevt); //¾×¼ÇÀÌº¥Æ®
-		setBounds(100, 100, 500, 500);//À©µµ¿ì»çÀÌÁî
-		setResizable(false);
-		setVisible(true);//°¡½ÃÈ­
-		addWindowListener(lgevt);
-	}//login
-	
+		JLabel jlblinfo = new JLabel("<html><body>ì•ˆë…•í•˜ì„¸ìš”<br>" + "<strong>4ì¡° ë¡œê·¸ë¶„ì„<strong> í”„ë¡œê·¸ë¨ì…ë‹ˆë‹¤.</body></html>"); // ì„¤ëª…ë¼ë²¨
+		jlblinfo.setFont(new Font("ë§‘ì€ê³ ë”•", Font.BOLD, 20)); // í°íŠ¸ì„¤ì •
+		jtfId = new JTextField(); // ì•„ì´ë””ì…ë ¥ì°½
+		JLabel jlblId = new JLabel("ID"); // ì•„ì´ë””í…ìŠ¤íŠ¸
+		jtfId.setBorder(new LineBorder(Color.BLACK, 2)); // ë¼ì¸ë³´ë“œë¡œ ê°•ì¡°ì—­í• 
+		jlblId.setFont(new Font("ë§‘ì€ê³ ë”•", Font.ITALIC, 12)); // ì•„ì´ë””ë¼ë²¨ í°íŠ¸
+		jlblId.setForeground(Color.BLACK); // ì•„ì´ë””ë¼ë²¨ ìƒ‰ê¹”
+
+		jpfPass = new JPasswordField("ë¹„ë°€ë²ˆí˜¸"); // íŒ¨ìŠ¤ì›Œë“œì…ë ¥ì°½
+		jpfPass.setBorder(new LineBorder(Color.BLACK, 2));// ë¼ì¸ë³´ë“œë¡œ ê°•ì¡°ì—­í• 
+		jpfPass.setText(""); // íŒ¨ìŠ¤ì›Œë“œ ì´ˆê¸°ì„¸íŒ…
+		JLabel jlblPw = new JLabel("Password"); // íŒ¨ìŠ¤ì›Œë“œí…ìŠ¤íŠ¸
+		jlblPw.setFont(new Font("ë§‘ì€ê³ ë”•", Font.ITALIC, 12)); // íŒ¨ìŠ¤ì›Œë“œë¼ë²¨ í°íŠ¸
+
+		JButton jbtnlogin = new JButton("ë¡œê·¸ì¸ í•˜ê¸°"); // ë¡œê·¸ì¸ë²„íŠ¼
+		jbtnlogin.setFont(new Font("ë§‘ì€ê³ ë”•", Font.BOLD, 23));// ë¡œê·¸ì¸ë²„íŠ¼ í°íŠ¸
+		jbtnlogin.setBackground(new Color(0x5929D0)); // ë¡œê·¸ì¸ë²„íŠ¼ ìƒ‰ìƒ
+		jbtnlogin.setForeground(Color.WHITE); // ìƒ‰ìƒì„¤ì •
+		jbtnlogin.setBorder(new LineBorder(Color.BLACK, 2));// ë¼ì¸ë³´ë“œë¡œ ê°•ì¡°ì—­í• 
+
+		JPanel jp = new JPanel();
+		jp.setBackground(new Color(0xF3F5F7)); // íŒ¨ë„ìƒ‰ìƒì„¤ì •
+		jp.setLayout(null); // 3. ë°°ì¹˜ê´€ë¦¬ì ì„¤ì •
+
+		// 4.ë°°ì¹˜
+		jlblinfo.setBounds(100, 70, 300, 50); // ë¼ë²¨
+		jlblId.setBounds(100, 140, 300, 30); // ë¡œê·¸ì¸í…ìŠ¤íŠ¸
+		jtfId.setBounds(100, 170, 300, 40); // ë¡œê·¸ì¸ì…ë ¥ì°½
+		jlblPw.setBounds(100, 220, 300, 30); // íŒ¨ìŠ¤ì›Œë“œí…ìŠ¤íŠ¸
+		jpfPass.setBounds(100, 250, 300, 40);// íŒ¨ìŠ¤ì›Œë“œ ì…ë ¥ì°½
+		jbtnlogin.setBounds(100, 350, 300, 40); // ë¡œê·¸ì¸ë²„íŠ¼
+
+		jp.add(jlblId); // ì•„ì´ë””ë¼ë²¨
+		jp.add(jtfId); // ì•„ì´ë””ì…ë ¥ì°½
+		jp.add(jpfPass); // íŒ¨ìŠ¤ì›Œë“œì…ë ¥ì°½
+		jp.add(jlblPw); // íŒ¨ìŠ¤ì›Œë“œë¼ë²¨
+		jp.add(jbtnlogin); // ë¡œê·¸ì¸ì…ë ¥ë²„íŠ¼
+		jp.add(jlblinfo); // ë¡œê·¸ì¸ì…ë ¥ë²„íŠ¼
+
+		add(jp); // JPanelì¶”ê°€
+		LoginEvt lgevt = new LoginEvt(this); // ì´ë²¤íŠ¸ ê°ì²´ ìƒì„±
+		jbtnlogin.addActionListener(lgevt); // ì•¡ì…˜ì´ë²¤íŠ¸
+		setBounds(100, 100, 500, 500);// ìœˆë„ìš°ì‚¬ì´ì¦ˆ
+		setResizable(false); // í¬ê¸°ëª»ì¤„ì´ê²Œ
+		setVisible(true);// ê°€ì‹œí™”
+		addWindowListener(lgevt); // ìœˆë„ìš°ì´ë²¤íŠ¸ ì¶”ê°€
+	}// login
+
 }
