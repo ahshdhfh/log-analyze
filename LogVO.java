@@ -3,152 +3,169 @@ package project;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogVO {	
-	
-	private String mostFrequentHour;//°¡Àå ¿äÃ»ÀÌ ¸¹Àº ½Ã°£
-	private String mostFrequentKey;//°¡Àå ¿äÃ»ÀÌ ¸¹Àº Å°
-	private int mostFrequentKeyV;//°¡Àå ¿äÃ»ÀÌ ¸¹Àº Å°ÀÇ °ª
-	private int maxHourValue;//½Ã°£
-	int[] hour= new int[24];	
-	private Map<String, Integer>key=new HashMap<String, Integer>(); //1¹ø Å×½ºÆ®	
-	private int ie;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	private int firefox;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	private int opera;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	
+public class LogVO {
+
+	private String mostFrequentHour;// ê°€ì¥ ìš”ì²­ì´ ë§ì€ ì‹œê°„
+	private String mostFrequentKey;// ê°€ì¥ ìš”ì²­ì´ ë§ì€ í‚¤
+	private int mostFrequentKeyV;// ê°€ì¥ ìš”ì²­ì´ ë§ì€ í‚¤ì˜ ê°’
+	private int maxHourValue;// ì‹œê°„
+	int[] hour = new int[24]; // ì‹œê°„í˜¸ì¶œëœ ê°œìˆ˜ìƒˆëŠ” ë³€ìˆ˜
+	private Map<String, Integer> key = new HashMap<String, Integer>(); // 1ë²ˆ í…ŒìŠ¤íŠ¸
+	private int ie;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+	private int firefox;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+	private int opera;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+
 	public LogVO() {
-		
-	}//LogVO
-	
+
+	}// LogVO
+
 	public void resetVariable() {
-		code200=0;//ÄÚµå 200ÀÌ ³ª¿Â È½¼ö
-		code404=0;//ÄÚµå 404ÀÌ ³ª¿Â È½¼ö
-		code403=0;//ÄÚµå 403ÀÌ ³ª¿Â È½¼ö
-		code500=0;//ÄÚµå 403ÀÌ ³ª¿Â È½¼ö
-		
-		mostFrequentHour="";//°¡Àå ¿äÃ»ÀÌ ¸¹Àº ½Ã°£
-		mostFrequentKey="";//°¡Àå ¿äÃ»ÀÌ ¸¹Àº Å°
-		mostFrequentKeyV=0;//°¡Àå ¿äÃ»ÀÌ ¸¹Àº Å°ÀÇ °ª
-		
-		ie=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		firefox=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		opera=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		chrome=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		safari=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		
-		maxHourValue=0;
-		hour= new int[24];
-		
-		key=new HashMap<String, Integer>();
-	}
-		
-	
-	
-	private int chrome;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	private int safari;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	private int code200;//ÄÚµå 200ÀÌ ³ª¿Â È½¼ö
-	private int code404;//ÄÚµå 404ÀÌ ³ª¿Â È½¼ö
-	private int code403;//ÄÚµå 403ÀÌ ³ª¿Â È½¼ö
-	private int code500;//ÄÚµå 403ÀÌ ³ª¿Â È½¼ö
-	
-	public String getMostFrequentHour() {
-		return mostFrequentHour;
-	}
-	public void setMostFrequentHour(String mostFrequentHour) {
-		this.mostFrequentHour = mostFrequentHour;
-	}
-	public String getMostFrequentKey() {
-		return mostFrequentKey;
-	}
-	public void setMostFrequentKey(String mostFrequentKey) {
-		this.mostFrequentKey = mostFrequentKey;
-	}
-	public int getMostFrequentKeyV() {
-		return mostFrequentKeyV;
-	}
-	public void setMostFrequentKeyV(int mostFrequentKeyV) {
-		this.mostFrequentKeyV = mostFrequentKeyV;
-	}
-	public int getMaxHourValue() {
-		return maxHourValue;
-	}
-	public void setMaxHourValue(int maxHourValue) {
-		this.maxHourValue = maxHourValue;
-	}
-	public int[] getHour() {
-		return hour;
-	}
-	public void setHour(int[] hour) {
-		this.hour = hour;
-	}
-	public Map<String, Integer> getKey() {
-		return key;
-	}
-	public void setKey(Map<String, Integer> key) {
-		this.key = key;
-	}
-	public int getIe() {
-		return ie;
-	}
-	public void setIe(int ie) {
-		this.ie = ie;
-	}
-	public int getFirefox() {
-		return firefox;
-	}
-	public void setFirefox(int firefox) {
-		this.firefox = firefox;
-	}
-	public int getOpera() {
-		return opera;
-	}
-	public void setOpera(int opera) {
-		this.opera = opera;
-	}
-	public int getChrome() {
-		return chrome;
-	}
-	public void setChrome(int chrome) {
-		this.chrome = chrome;
-	}
-	public int getSafari() {
-		return safari;
-	}
-	public void setSafari(int safari) {
-		this.safari = safari;
-	}
-	public int getCode200() {
-		return code200;
-	}
-	public void setCode200(int code200) {
-		this.code200 = code200;
-	}
-	public int getCode404() {
-		return code404;
-	}
-	public void setCode404(int code404) {
-		this.code404 = code404;
-	}
-	public int getCode403() {
-		return code403;
-	}
-	public void setCode403(int code403) {
-		this.code403 = code403;
-	}
-	public int getCode500() {
-		return code500;
-	}
-	public void setCode500(int code500) {
-		this.code500 = code500;
+		code200 = 0;// ì½”ë“œ 200ì´ ë‚˜ì˜¨ íšŸìˆ˜
+		code404 = 0;// ì½”ë“œ 404ì´ ë‚˜ì˜¨ íšŸìˆ˜
+		code403 = 0;// ì½”ë“œ 403ì´ ë‚˜ì˜¨ íšŸìˆ˜
+		code500 = 0;// ì½”ë“œ 403ì´ ë‚˜ì˜¨ íšŸìˆ˜
+
+		mostFrequentHour = "";// ê°€ì¥ ìš”ì²­ì´ ë§ì€ ì‹œê°„
+		mostFrequentKey = "";// ê°€ì¥ ìš”ì²­ì´ ë§ì€ í‚¤
+		mostFrequentKeyV = 0;// ê°€ì¥ ìš”ì²­ì´ ë§ì€ í‚¤ì˜ ê°’
+
+		ie = 0;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+		firefox = 0;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+		opera = 0;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+		chrome = 0;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+		safari = 0;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+
+		maxHourValue = 0; // ê°€ì¥ ë§ì´ í˜¸ì¶œëœ ì‹œê°„ì„ ë‹´ëŠ” ë³€ìˆ˜
+		hour = new int[24]; // ì‹œê°„í˜¸ì¶œëœ ê°œìˆ˜ìƒˆëŠ” ë³€ìˆ˜
+
+		key = new HashMap<String, Integer>(); // 1ë²ˆë¬¸ì œì— ì‚¬ìš©í•˜ëŠ” ë³€ìˆ˜
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}//LogVO
+	private int chrome;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+	private int safari;// ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+	private int code200;// ì½”ë“œ 200ì´ ë‚˜ì˜¨ íšŸìˆ˜
+	private int code404;// ì½”ë“œ 404ì´ ë‚˜ì˜¨ íšŸìˆ˜
+	private int code403;// ì½”ë“œ 403ì´ ë‚˜ì˜¨ íšŸìˆ˜
+	private int code500;// ì½”ë“œ 403ì´ ë‚˜ì˜¨ íšŸìˆ˜
+
+	public String getMostFrequentHour() {
+		return mostFrequentHour;
+	}// getMostFrequentHour
+
+	public void setMostFrequentHour(String mostFrequentHour) {
+		this.mostFrequentHour = mostFrequentHour;
+	}// setMostFrequentHour
+
+	public String getMostFrequentKey() {
+		return mostFrequentKey;
+	}// getMostFrequentKey
+
+	public void setMostFrequentKey(String mostFrequentKey) {
+		this.mostFrequentKey = mostFrequentKey;
+	}// setMostFrequentKey
+
+	public int getMostFrequentKeyV() {
+		return mostFrequentKeyV;
+	}// getMostFrequentKeyV
+
+	public void setMostFrequentKeyV(int mostFrequentKeyV) {
+		this.mostFrequentKeyV = mostFrequentKeyV;
+	}// setMostFrequentKeyV
+
+	public int getMaxHourValue() {
+		return maxHourValue;
+	}// getMaxHourValue
+
+	public void setMaxHourValue(int maxHourValue) {
+		this.maxHourValue = maxHourValue;
+	}// setMaxHourValue
+
+	public int[] getHour() {
+		return hour;
+	}// getHour
+
+	public void setHour(int[] hour) {
+		this.hour = hour;
+	}// setHour
+
+	public Map<String, Integer> getKey() {
+		return key;
+	}// getKey
+
+	public void setKey(Map<String, Integer> key) {
+		this.key = key;
+	}// setKey
+
+	public int getIe() {
+		return ie;
+	}// getIe
+
+	public void setIe(int ie) {
+		this.ie = ie;
+	}// setIe
+
+	public int getFirefox() {
+		return firefox;
+	}// getFirefox
+
+	public void setFirefox(int firefox) {
+		this.firefox = firefox;
+	}// setFirefox
+
+	public int getOpera() {
+		return opera;
+	}// getOpera
+
+	public void setOpera(int opera) {
+		this.opera = opera;
+	}// setOpera
+
+	public int getChrome() {
+		return chrome;
+	}// getChrome
+
+	public void setChrome(int chrome) {
+		this.chrome = chrome;
+	}// setChrome
+
+	public int getSafari() {
+		return safari;
+	}// getSafari
+
+	public void setSafari(int safari) {
+		this.safari = safari;
+	}// setSafari
+
+	public int getCode200() {
+		return code200;
+	}// getCode200
+
+	public void setCode200(int code200) {
+		this.code200 = code200;
+	}// setCode200
+
+	public int getCode404() {
+		return code404;
+	}// getCode404
+
+	public void setCode404(int code404) {
+		this.code404 = code404;
+	}// setCode404
+
+	public int getCode403() {
+		return code403;
+	}// getCode403
+
+	public void setCode403(int code403) {
+		this.code403 = code403;
+	}// setCode403
+
+	public int getCode500() {
+		return code500;
+	}// getCode500
+
+	public void setCode500(int code500) {
+		this.code500 = code500;
+	}// setCode500
+
+}// LogVO
