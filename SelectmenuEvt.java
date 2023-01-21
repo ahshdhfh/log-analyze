@@ -26,10 +26,10 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 
 	private SelectMenu sm;
 	private Login lg;
-	String filePath = "C:/dev/workspace/javase_prj/src/project/";//ÇÁ·ÎÁ§Æ®\1Â÷\SIST_ANAL_01¿ä±¸»çÇ×Á¤ÀÇ¼­;//ºÒ·¯¿î ÆÄÀÏ °æ·Î
-	String fName;//ºÒ·¯¿Â ÆÄÀÏ ÀÌ¸§
-	String logTxtCreationDate;//·Î±×ÆÄÀÏ ³¯Â¥ ±â·Ï¿ë
-	String[] browser;//»ç¿ëµÈ ºê¶ó¿ìÀú ±â·Ï¿ë ¹è¿­
+	String filePath = "C:/dev/workspace/javase_prj/src/project/";//í”„ë¡œì íŠ¸\1ì°¨\SIST_ANAL_01ìš”êµ¬ì‚¬í•­ì •ì˜ì„œ;//ë¶ˆëŸ¬ìš´ íŒŒì¼ ê²½ë¡œ
+	String fName="";//ë¶ˆëŸ¬ì˜¨ íŒŒì¼ ì´ë¦„
+	String logTxtCreationDate;//ë¡œê·¸íŒŒì¼ ë‚ ì§œ ê¸°ë¡ìš©
+	String[] browser;//ì‚¬ìš©ëœ ë¸Œë¼ìš°ì € ê¸°ë¡ìš© ë°°ì—´
 	public String getFilePath() {
 		return filePath;
 	}
@@ -46,36 +46,36 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		this.fName = fName;
 	}
 
-	String[] log;//°¢ ¹æ ÇÏ³ª¿¡ ·Î±× ÇÑÁÙ¾¿ 
+	String[] log;//ê° ë°© í•˜ë‚˜ì— ë¡œê·¸ í•œì¤„ì”© 
 	//ex)[200][http://sist.co.kr/find/new?key=res&query=sist][ie][2023-01-16 11:11:43]
-	List<String> token;//¹æÇÏ³ª¿¡ ÅäÅ« ÇÏ³ª¾¿ 
+	List<String> token;//ë°©í•˜ë‚˜ì— í† í° í•˜ë‚˜ì”© 
 	//ex) [200, [500
 	
 	private String data;
-	private int totalCntLine;//ÃÑ È£ÃâµÈ È½¼ö! ** ¸Ş¼­µå¿¡ »ç¿ë
+	private int totalCntLine;//ì´ í˜¸ì¶œëœ íšŸìˆ˜! ** ë©”ì„œë“œì— ì‚¬ìš©
 	private int cntLine;
-	private int maxHourValue;//½Ã°£
+	private int maxHourValue;//ì‹œê°„
 	int[] hour= new int[24];
 	
-	Map<String, Integer>key=new HashMap<String, Integer>(); //1¹ø Å×½ºÆ®
+	Map<String, Integer>key=new HashMap<String, Integer>(); //1ë²ˆ í…ŒìŠ¤íŠ¸
 	
 
-	private int ie;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	private int firefox;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	private int opera;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	private int chrome;//ºê¶ó¿ìÀú Ä«¿îÆ®
-	private int safari;//ºê¶ó¿ìÀú Ä«¿îÆ®
+	private int ie;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+	private int firefox;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+	private int opera;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+	private int chrome;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+	private int safari;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
 	
-	private int code200;//ÄÚµå 200ÀÌ ³ª¿Â È½¼ö
-	private int code404;//ÄÚµå 404ÀÌ ³ª¿Â È½¼ö
-	private int code403;//ÄÚµå 403ÀÌ ³ª¿Â È½¼ö
-	private int code500;//ÄÚµå 403ÀÌ ³ª¿Â È½¼ö
+	private int code200;//ì½”ë“œ 200ì´ ë‚˜ì˜¨ íšŸìˆ˜
+	private int code404;//ì½”ë“œ 404ì´ ë‚˜ì˜¨ íšŸìˆ˜
+	private int code403;//ì½”ë“œ 403ì´ ë‚˜ì˜¨ íšŸìˆ˜
+	private int code500;//ì½”ë“œ 403ì´ ë‚˜ì˜¨ íšŸìˆ˜
 	private int startLine;
 	private int endLine;
 	
-	private String mostFrequentHour;//°¡Àå ¿äÃ»ÀÌ ¸¹Àº ½Ã°£
-	private String mostFrequentKey;//°¡Àå ¿äÃ»ÀÌ ¸¹Àº Å°
-	private int mostFrequentKeyV;//°¡Àå ¿äÃ»ÀÌ ¸¹Àº Å°ÀÇ °ª
+	private String mostFrequentHour;//ê°€ì¥ ìš”ì²­ì´ ë§ì€ ì‹œê°„
+	private String mostFrequentKey;//ê°€ì¥ ìš”ì²­ì´ ë§ì€ í‚¤
+	private int mostFrequentKeyV;//ê°€ì¥ ìš”ì²­ì´ ë§ì€ í‚¤ì˜ ê°’
 	
 	public int getOpera() {
 		return opera;
@@ -168,23 +168,23 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	
 	public void resetVariable() {
 		data="";
-		code200=0;//ÄÚµå 200ÀÌ ³ª¿Â È½¼ö
-		code404=0;//ÄÚµå 404ÀÌ ³ª¿Â È½¼ö
-		code403=0;//ÄÚµå 403ÀÌ ³ª¿Â È½¼ö
-		code500=0;//ÄÚµå 403ÀÌ ³ª¿Â È½¼ö
+		code200=0;//ì½”ë“œ 200ì´ ë‚˜ì˜¨ íšŸìˆ˜
+		code404=0;//ì½”ë“œ 404ì´ ë‚˜ì˜¨ íšŸìˆ˜
+		code403=0;//ì½”ë“œ 403ì´ ë‚˜ì˜¨ íšŸìˆ˜
+		code500=0;//ì½”ë“œ 403ì´ ë‚˜ì˜¨ íšŸìˆ˜
 		
-		mostFrequentHour="";//°¡Àå ¿äÃ»ÀÌ ¸¹Àº ½Ã°£
-		mostFrequentKey="";//°¡Àå ¿äÃ»ÀÌ ¸¹Àº Å°
-		mostFrequentKeyV=0;//°¡Àå ¿äÃ»ÀÌ ¸¹Àº Å°ÀÇ °ª
+		mostFrequentHour="";//ê°€ì¥ ìš”ì²­ì´ ë§ì€ ì‹œê°„
+		mostFrequentKey="";//ê°€ì¥ ìš”ì²­ì´ ë§ì€ í‚¤
+		mostFrequentKeyV=0;//ê°€ì¥ ìš”ì²­ì´ ë§ì€ í‚¤ì˜ ê°’
 		
-		ie=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		firefox=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		opera=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		chrome=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
-		safari=0;//ºê¶ó¿ìÀú Ä«¿îÆ®
+		ie=0;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+		firefox=0;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+		opera=0;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+		chrome=0;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
+		safari=0;//ë¸Œë¼ìš°ì € ì¹´ìš´íŠ¸
 		
 		cntLine=0;
-		totalCntLine=0;//ÃÑ È£ÃâµÈ È½¼ö! ** ¸Ş¼­µå¿¡ »ç¿ë
+		totalCntLine=0;//ì´ í˜¸ì¶œëœ íšŸìˆ˜! ** ë©”ì„œë“œì— ì‚¬ìš©
 		
 		maxHourValue=0;
 		hour= new int[24];
@@ -207,11 +207,12 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	}//windowClosing
 	
 	/**
-	 * ¹öÆ° ´©¸¦½Ã ¹ß»ıÇÏ´Â ¸Ş¼­µå ÀÔ·ÂÇÏ±â
+	 * ë²„íŠ¼ ëˆ„ë¥¼ì‹œ ë°œìƒí•˜ëŠ” ë©”ì„œë“œ ì…ë ¥í•˜ê¸°
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==sm.getJbtnView()) {
+			
 			
 			if(fName.equals("sist_input_1.log")||fName.equals("sist_input_2.log")) {
 			if(sm.getJtfLineinput().getText().equals("")) {
@@ -234,16 +235,16 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 				System.out.println("2");
 				calMostFrequentKey();
 				System.out.println("3");
-				// max°ª ±¸ÇÏ´Â ¸Ş¼Òµå
+				// maxê°’ êµ¬í•˜ëŠ” ë©”ì†Œë“œ
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			new Result(sm,this);
 			}else {
-				JOptionPane.showMessageDialog(sm, "´Ù½ÃÀÔ·ÂÇØÁÖ¼¼¿ä");
+				JOptionPane.showMessageDialog(sm, "ë‹¤ì‹œì…ë ¥í•´ì£¼ì„¸ìš”");
 			}
 			}else {
-				JOptionPane.showMessageDialog(sm, "Áö¿øÇÏ´Â ÆÄÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù. ÆÄÀÏÀ» ´Ù½Ã ¼±ÅÃÇØÁÖ¼¼¿ä");
+				JOptionPane.showMessageDialog(sm, "ì§€ì›í•˜ëŠ” íŒŒì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤. íŒŒì¼ì„ ë‹¤ì‹œ ì„ íƒí•´ì£¼ì„¸ìš”");
 			}
 			
 		}//end if
@@ -264,7 +265,7 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 			}
 			if(endLine>startLine || endLine==startLine) {
 			if(lg.getId().equals("root")) {
-				JOptionPane.showMessageDialog(sm, "¹®¼­¸¦ »ı¼ºÇÒ ¼ö ÀÖ´Â ±ÇÇÑÀÌ ¾øÀ½");
+				JOptionPane.showMessageDialog(sm, "ë¬¸ì„œë¥¼ ìƒì„±í•  ìˆ˜ ìˆëŠ” ê¶Œí•œì´ ì—†ìŒ");
 			}else {
 				try {
 					readLog();
@@ -276,15 +277,15 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 				}
 			}
 			}else {
-				JOptionPane.showMessageDialog(sm, "´Ù½ÃÀÔ·ÂÇØÁÖ¼¼¿ä");
+				JOptionPane.showMessageDialog(sm, "ë‹¤ì‹œì…ë ¥í•´ì£¼ì„¸ìš”");
 			}
 			}else {
-				JOptionPane.showMessageDialog(sm, "Áö¿øÇÏ´Â ÆÄÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù. ÆÄÀÏÀ» ´Ù½Ã ¼±ÅÃÇØÁÖ¼¼¿ä");
+				JOptionPane.showMessageDialog(sm, "ì§€ì›í•˜ëŠ” íŒŒì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤. íŒŒì¼ì„ ë‹¤ì‹œ ì„ íƒí•´ì£¼ì„¸ìš”");
 			}
 		}//end if
 		
 		if(ae.getSource()==sm.getJbtnFileSelect()) {
-			FileDialog fdOpen=new FileDialog(sm, "ÆÄÀÏ ¿­±â", FileDialog.LOAD);
+			FileDialog fdOpen=new FileDialog(sm, "íŒŒì¼ ì—´ê¸°", FileDialog.LOAD);
 			fdOpen.setVisible(true);
 			filePath=fdOpen.getDirectory();
 			fName=fdOpen.getFile();
@@ -294,7 +295,7 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	
 	
 	public void readLog() throws IOException {
-		resetVariable();//½ÃÀÛÀü iv ÃÊ±âÈ­
+		resetVariable();//ì‹œì‘ì „ iv ì´ˆê¸°í™”
 //		if(sm.getJtfLineinput().getText().equals("")) {
 //			startLine=0;
 //			endLine=20000;
@@ -343,8 +344,8 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	
 
 	/**
-	 * 1¹ø ¹®Á¦ 
-	 * °¡Àå¸¹ÀÌ ³ª¿Â key Ã£¾Æ³»´Â ¸Ş¼­µå
+	 * 1ë²ˆ ë¬¸ì œ 
+	 * ê°€ì¥ë§ì´ ë‚˜ì˜¨ key ì°¾ì•„ë‚´ëŠ” ë©”ì„œë“œ
 	 */
 	public void countKey(String token) {
 		int values = 0;
@@ -353,22 +354,22 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 			}else {
 //				System.out.println(1);
 			}
-			if (!(key.containsKey(token))) {// Å°°¡ ¾øÀ¸¸é?
-				key.put(token, 1);// »õ·Î¿î Å°, °ªÀ» ¼³Á¤
-			} else if (key.containsKey(token)) {// Å°°¡ ÀÖÀ»¶§
-				values = key.get(token);// ÇöÀç ÀúÀåµÈ °ªÀ» »©ÁÖ±â
-				values += 1;// °ª¿¡ 1 Ä«¿îÆ®
-				key.put(token, values);// Ä«¿îÆÃ µÈ °ªÀ» ³Ö±â
+			if (!(key.containsKey(token))) {// í‚¤ê°€ ì—†ìœ¼ë©´?
+				key.put(token, 1);// ìƒˆë¡œìš´ í‚¤, ê°’ì„ ì„¤ì •
+			} else if (key.containsKey(token)) {// í‚¤ê°€ ìˆì„ë•Œ
+				values = key.get(token);// í˜„ì¬ ì €ì¥ëœ ê°’ì„ ë¹¼ì£¼ê¸°
+				values += 1;// ê°’ì— 1 ì¹´ìš´íŠ¸
+				key.put(token, values);// ì¹´ìš´íŒ… ëœ ê°’ì„ ë„£ê¸°
 			} // end else if
 	}//calMostFrequentKey
 	
 	public void calMostFrequentKey() {
 		mostFrequentKey="";
 		int maxValue = Collections.max(key.values());
-		//key7¿¡ Ä«¿îÆ®µÈ °ªµéÁß collections.maxÀ» ÅëÇØ °¡Àå ¸¹ÀÌ Ä«¿îÆ®µÈ È½¼ö¸¦ µµÃâÇÑ´Ù.
-		for (String r : key.keySet()) {//key¿¡ key1À» ÅëÇØ ¾òÀº ¸ğµç Å°¸¦ ¾ò´Â´Ù.
-			if (key.get(r) == maxValue) {//keyÀÇ Å°°ª Áß °¡Àå ¸¹Àº È½¼ö¸¦ ¾òÀº Å°°¡ ÀÖÀ» °æ¿ì
-				mostFrequentKey = r+"";//±× "Å°°ªÀ» ÃÖ´Ù»ç¿ë Å°"·Î ÁöÁ¤ÇÑ´Ù.
+		//key7ì— ì¹´ìš´íŠ¸ëœ ê°’ë“¤ì¤‘ collections.maxì„ í†µí•´ ê°€ì¥ ë§ì´ ì¹´ìš´íŠ¸ëœ íšŸìˆ˜ë¥¼ ë„ì¶œí•œë‹¤.
+		for (String r : key.keySet()) {//keyì— key1ì„ í†µí•´ ì–»ì€ ëª¨ë“  í‚¤ë¥¼ ì–»ëŠ”ë‹¤.
+			if (key.get(r) == maxValue) {//keyì˜ í‚¤ê°’ ì¤‘ ê°€ì¥ ë§ì€ íšŸìˆ˜ë¥¼ ì–»ì€ í‚¤ê°€ ìˆì„ ê²½ìš°
+				mostFrequentKey = r+"";//ê·¸ "í‚¤ê°’ì„ ìµœë‹¤ì‚¬ìš© í‚¤"ë¡œ ì§€ì •í•œë‹¤.
 				mostFrequentKeyV=maxValue;
 				break;     
 			} // end if
@@ -378,8 +379,8 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 
 	
 	/**
-	 * 2¹ø¹®Á¦
-	 * ºê¶ó¿ìÀúº° Á¢¼Ó È½¼ö, ºñÀ²±¸ÇÏ±â
+	 * 2ë²ˆë¬¸ì œ
+	 * ë¸Œë¼ìš°ì €ë³„ ì ‘ì† íšŸìˆ˜, ë¹„ìœ¨êµ¬í•˜ê¸°
 	 */
 	public void countBrowser(String token) {
 		if(token.equals("ie")) {
@@ -404,7 +405,7 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	
 	
 	/**
-	 * 3¹ø, 5¹ø, 6¹ø¹®Á¦
+	 * 3ë²ˆ, 5ë²ˆ, 6ë²ˆë¬¸ì œ
 	 * @param token
 	 */
 	public void cntCode(String token) {
@@ -417,8 +418,8 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	}//cntCode
 	
 	/**
-	 * 4¹ø¹®Á¦
-	 * °¡Àå¸¹ÀÌ Á¢¼ÓÇÑ ½Ã°£ Ã£´Â ¸Ş¼­µå 
+	 * 4ë²ˆë¬¸ì œ
+	 * ê°€ì¥ë§ì´ ì ‘ì†í•œ ì‹œê°„ ì°¾ëŠ” ë©”ì„œë“œ 
 	 */
 	public void calTime() {
 		for(int h=1;h<hour.length;h++) {
@@ -430,8 +431,8 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		
 	public void calMostFrequentHour(String token) {
 		/**
-		 * 4¹ø¹®Á¦
-		 * °¡Àå¸¹ÀÌ Á¢¼ÓÇÑ ½Ã°£ Ã£´Â ¸Ş¼­µå 
+		 * 4ë²ˆë¬¸ì œ
+		 * ê°€ì¥ë§ì´ ì ‘ì†í•œ ì‹œê°„ ì°¾ëŠ” ë©”ì„œë“œ 
 		 */
 		token =token.substring(11, 13);
 		int num=Integer.parseInt(token);
@@ -440,15 +441,15 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		} //calMostFrequentHour
 
 	/**
-	 * 8¹ø¹®Á¦ 1~7¹ø °á°ú ´ÙÀÌ¾ó·Î±×·Î º¸¿©ÁÖ±â report»ı¼º ¹öÆ°ÀÌ Å¬¸¯µÇ¸é c:/dev/reportÆú´õ¸¦ »ı¼ºÇÑ ÈÄ
-	 * ¡°report_»ı¼º³¯Â¥.dat¡± ÆÄÀÏÀ» »ı¼ºÇÏ¿© 1~6±îÁöÀÇ ÀÛ¾÷À» ¸ğµÎ Ãâ·ÂÇÑ´Ù. ÆÄÀÏ¸í ¿¹)
+	 * 8ë²ˆë¬¸ì œ 1~7ë²ˆ ê²°ê³¼ ë‹¤ì´ì–¼ë¡œê·¸ë¡œ ë³´ì—¬ì£¼ê¸° reportìƒì„± ë²„íŠ¼ì´ í´ë¦­ë˜ë©´ c:/dev/reportí´ë”ë¥¼ ìƒì„±í•œ í›„
+	 * â€œreport_ìƒì„±ë‚ ì§œ.datâ€ íŒŒì¼ì„ ìƒì„±í•˜ì—¬ 1~6ê¹Œì§€ì˜ ì‘ì—…ì„ ëª¨ë‘ ì¶œë ¥í•œë‹¤. íŒŒì¼ëª… ì˜ˆ)
 	 * report_1628605156919.dat
 	 */
 	public void showResult() throws IOException {
 		Date date = new Date();
 		File dir = new File("C:/dev/report");
 		if (!dir.exists()) {
-			dir.mkdirs();// µğ·ºÅä¸® »ı¼º
+			dir.mkdirs();// ë””ë ‰í† ë¦¬ ìƒì„±
 		} // end if
 
 		BufferedWriter bw = null;
@@ -456,23 +457,23 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		try {
 			bw = new BufferedWriter(new FileWriter(saveFile));
 
-			bw.write("1¹ø\n°¡Àå¸¹ÀÌ Á¢¼ÓÇÑ ºê¶ó¿ìÀú : "+getMostFrequentKey()+", È½¼ö : "+getMostFrequentKeyV()+"\n");//1¹ø¹®Á¦
-			bw.write("2¹ø\nIE : "+getIe()+"("+Math.round(((double)getIe()/(double)getCntLine()*100.0))+"%)"//2¹ø¹®Á¦
+			bw.write("1ë²ˆ\nê°€ì¥ë§ì´ ì ‘ì†í•œ ë¸Œë¼ìš°ì € : "+getMostFrequentKey()+", íšŸìˆ˜ : "+getMostFrequentKeyV()+"\n");//1ë²ˆë¬¸ì œ
+			bw.write("2ë²ˆ\nIE : "+getIe()+"("+Math.round(((double)getIe()/(double)getCntLine()*100.0))+"%)"//2ë²ˆë¬¸ì œ
 					+", FireFox : "+getFirefox()+"("+Math.round(((double)getFirefox()/(double)getCntLine()*100.0))+"%)"
 					+", Chrome : "+getChrome()+"("+Math.round(((double)getChrome()/(double)getCntLine()*100.0))+"%)"
 					+", Safari : "+getSafari()+"("+Math.round(((double)getSafari()/(double)getCntLine()*100.0))+"%)"
 					+", Opera : "+getOpera()+"("+Math.round(((double)getOpera()/(double)getCntLine()*100.0))+"%)\n"
 					);
-			bw.write("3¹ø\n¼º°ø È½¼ö(200) : "+getCode200()+", ½ÇÆĞ È½¼ö(404) : "+ getCode404() + "\n" );//3¹ø¹®Á¦
-			bw.write("4¹ø\n¿äÃ»ÀÌ °¡Àå ¸¹Àº ½Ã°£´ë: "+getMaxHourValue()+"½Ã\n");//4¹ø¹®Á¦
-			bw.write("5¹ø\nºñÁ¤»óÀûÀÎ ¿äÃ» (403)" + getCode403()+ "¹ø, ºñÀ² : "+ getCode403()+"%\n");//5¹ø¹®Á¦
-			bw.write("6¹ø\n¿äÃ»¿¡ ´ëÇÑ ¿¡·¯ (500)" + getCode500()+ "¹ø, ºñÀ² : "+ getCode500()+"%\n");//6¹ø¹®Á¦
-			bw.flush();// ºĞÃâ
+			bw.write("3ë²ˆ\nì„±ê³µ íšŸìˆ˜(200) : "+getCode200()+", ì‹¤íŒ¨ íšŸìˆ˜(404) : "+ getCode404() + "\n" );//3ë²ˆë¬¸ì œ
+			bw.write("4ë²ˆ\nìš”ì²­ì´ ê°€ì¥ ë§ì€ ì‹œê°„ëŒ€: "+getMaxHourValue()+"ì‹œ\n");//4ë²ˆë¬¸ì œ
+			bw.write("5ë²ˆ\në¹„ì •ìƒì ì¸ ìš”ì²­ (403)" + getCode403()+ "ë²ˆ, ë¹„ìœ¨ : "+ getCode403()+"%\n");//5ë²ˆë¬¸ì œ
+			bw.write("6ë²ˆ\nìš”ì²­ì— ëŒ€í•œ ì—ëŸ¬ (500)" + getCode500()+ "ë²ˆ, ë¹„ìœ¨ : "+ getCode500()+"%\n");//6ë²ˆë¬¸ì œ
+			bw.flush();// ë¶„ì¶œ
 
 		} finally {
 			if (bw != null) {
 				bw.close();
-			} // ½ºÆ®¸²¿¡ ³²¾ÆÀÖ´Â ³»¿ëÀ» ¸ñÀûÁö·Î ºĞÃâ(flush)ÇÏ°í ¿¬°áÀ» ²÷´Â´Ù.
+			} // ìŠ¤íŠ¸ë¦¼ì— ë‚¨ì•„ìˆëŠ” ë‚´ìš©ì„ ëª©ì ì§€ë¡œ ë¶„ì¶œ(flush)í•˜ê³  ì—°ê²°ì„ ëŠëŠ”ë‹¤.
 		} // end finallyy
 	}
 }
