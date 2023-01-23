@@ -126,8 +126,13 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		if (ae.getSource() == sm.getJbtnFileSelect()) { // 파일선택 버튼이 눌리면
 			FileDialog fdOpen = new FileDialog(sm, "파일 열기", FileDialog.LOAD); // 파일 DIalog 열기
 			fdOpen.setVisible(true); // 다이얼로그가 보이게 디폴트 값이 false임으로 true로 선언해줘야함
-			filePath = fdOpen.getDirectory(); // 파일골랐으면 경로값 저장
-			fName = fdOpen.getFile(); // 파일골랐으면 파일 이름값 저장
+			if(!filePath.equals("")&&!fName.equals("")) {
+				filePath = fdOpen.getDirectory(); // 파일골랐으면 경로값 저장
+				fName = fdOpen.getFile(); // 파일골랐으면 파일 이름값 저장				
+			}else {
+				filePath=""; //안고르고 취소누르면 null값 넣기
+				fName=""; //안고르고 취소누르면 null값 넣기
+			}
 			sm.JtextFilememo(fName); // 파일이름을 사용자가 고른 파일이름으로 텍스트창에 보여주기
 		} // end if
 	}// actionPerformed
