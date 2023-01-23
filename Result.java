@@ -18,7 +18,7 @@ public class Result extends JDialog {
 
 		JTextField jtfViewLine = new JTextField(); // 범위선택택스트창
 		jtfViewLine.setText(
-				"총 log 개수는 " + smenu.getCntLine() + "개이며," + main.getJtfLineinput().getText() + "범위의 로그분석결과입니다."); // 범위선택택스트창
+				"총 log 개수는 " + smenu.getCntLine() + "개이며," + smenu.getStartLine()+" ~ "+smenu.getEndLine() + "범위의 로그분석결과입니다."); // 범위선택택스트창
 		jtfViewLine.setEditable(false); // 사용자가 못건들게
 		jtfViewLine.setBorder(new LineBorder(Color.BLACK, 1)); // 강조를 위한 LineBorder
 		jtfViewLine.setFont(new Font("맑은고딕", Font.BOLD, 12)); // 폰트설정
