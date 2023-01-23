@@ -23,8 +23,8 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	private SelectMenu sm; // select menu 객체
 	private Login lg; // 로그인클래스 겍체
 	private LogVO lv = new LogVO(); // 로그정보객체
-	private LogDecomposition ldp=new LogDecomposition(lv);  //로그분해 및 카운트 객체
-	
+	private LogDecomposition ldp = new LogDecomposition(lv); // 로그분해 및 카운트 객체
+
 	private String filePath = "";// 불러운 파일 경로
 	private String fName = "";// 불러온 파일 이름
 	private List<String> token;// 방하나에 토큰 하나씩
@@ -33,6 +33,15 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	private int totalCntLine;// 총 호출된 횟수! ** 메서드에 사용
 	private int cntLine; // 읽어온 라인수 새는 변수
 	private int startLine; // 시작라인 설정할 변수
+
+	public int getStartLine() {
+		return startLine;
+	}
+
+	public int getEndLine() {
+		return endLine;
+	}
+
 	private int endLine; // 끝라인 설정할 변수
 
 	public String getFilePath() {
@@ -85,49 +94,33 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 
 		if (ae.getSource() == sm.getJbtnView()) { // view 버튼이 눌리면
-			if (fName.equals("sist_input_1.log") || fName.equals("sist_input_2.log")) { // 파일이 지원하는 파일인지
-				lineCheck(); //원하는 라인입력값확인
-				if ((endLine > startLine || endLine == startLine)&&(startLine>-1 && endLine>-1)) { // 라인수 형식이 맞는지 검사 맞으면 돌아가게
+			if (ExecuteCondition()) {
+				try {
+					readLog(); // 파일 읽기
+					ldp.calTime(); // 가장 많이 호출된 시간계산
+					ldp.calMostFrequentKey(); // 가장 많이 사용된 키값 계산
+				} catch (IOException e) {
+					e.printStackTrace();
+				} // end catch
+				new Result(sm, this, lv); // result 창 띄우기
+			}
+		} // end if
+
+		if (ae.getSource() == sm.getJbtnReport()) { // 레포트 버튼이 눌리면
+			if (ExecuteCondition()) {
+				if (lg.getId().equals("root")) {
+					JOptionPane.showMessageDialog(sm, "문서를 생성할 수 있는 권한이 없음");
+				} else {
 					try {
-						readLog(); // 파일 읽기
-						ldp.calTime(); // 가장 많이 호출된 시간계산
+						readLog();// 파일 읽기
+						ldp.calTime();// 가장 많이 호출된 시간계산
 						ldp.calMostFrequentKey(); // 가장 많이 사용된 키값 계산
+						showResult(); // 파일을 만들 메소드
 					} catch (IOException e) {
 						e.printStackTrace();
 					} // end catch
-					new Result(sm, this, lv); // result 창 띄우기
-				} else {
-					JOptionPane.showMessageDialog(sm, "라인 수를 다시입력해주세요"); // 라인수 형식이 맞지 않음
 				} // end else
-			} else {
-				JOptionPane.showMessageDialog(sm, "지원하는 파일 형식이 아닙니다. 파일을 다시 선택해주세요"); // 지원하는 파일 형식이 아님
-			} // end else
-
-		} // end if
-
-		
-		if (ae.getSource() == sm.getJbtnReport()) { // 레포트 버튼이 눌리면
-			if (fName.equals("sist_input_1.log") || fName.equals("sist_input_2.log")) { // 파일이 지원하는 형식인지
-				lineCheck();//원하는 라인입력값확인
-				if ((endLine > startLine || endLine == startLine)&&(startLine>-1 && endLine>-1)) { // 라인입력값 형식이 맞는지
-					if (lg.getId().equals("root")) {
-						JOptionPane.showMessageDialog(sm, "문서를 생성할 수 있는 권한이 없음");
-					} else {
-						try {
-							readLog();// 파일 읽기
-							ldp.calTime();// 가장 많이 호출된 시간계산
-							ldp.calMostFrequentKey(); // 가장 많이 사용된 키값 계산
-							showResult(); // 파일을 만들 메소드
-						} catch (IOException e) {
-							e.printStackTrace();
-						} // end catch
-					} // end else
-				} else {
-					JOptionPane.showMessageDialog(sm, "라인 수를 다시입력해주세요"); // 라인수 형식이 맞지 않음
-				} // end else
-			} else {
-				JOptionPane.showMessageDialog(sm, "지원하는 파일 형식이 아닙니다. 파일을 다시 선택해주세요");// 지원하는 파일 형식이 아님
-			} // end else
+			}
 		} // end if
 
 		if (ae.getSource() == sm.getJbtnFileSelect()) { // 파일선택 버튼이 눌리면
@@ -138,24 +131,58 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 			sm.JtextFilememo(fName); // 파일이름을 사용자가 고른 파일이름으로 텍스트창에 보여주기
 		} // end if
 	}// actionPerformed
-	
+
+	public boolean ExecuteCondition() {
+		boolean result = false;
+		if (fName.equals("sist_input_1.log") || fName.equals("sist_input_2.log")) { // 파일이 지원하는 형식인지
+			lineCheck();// 원하는 라인입력값확인
+			if (totalCntLine < startLine || totalCntLine < endLine) {//
+				JOptionPane.showMessageDialog(sm, "지정된 수가 너무 큽니다! " + totalCntLine + "줄 내에서 설정해주세요!");
+			} else if ((endLine > startLine || endLine == startLine) && (startLine > -1 && endLine > -1)) { // 라인 입력값
+																											// 형식이 맞는지
+				result = true;
+			} else {
+				JOptionPane.showMessageDialog(sm, "라인 수를 다시입력해주세요"); // 라인수 형식이 맞지 않음
+			} // end else
+		} else {
+			JOptionPane.showMessageDialog(sm, "지원하는 파일 형식이 아닙니다. 파일을 다시 선택해주세요"); // 지원하는 파일 형식이 아님
+		} // end else
+		return result;
+	}
+
 	public void lineCheck() {
+		///////////////// 수정된부분//////////////////////
+		File file = new File(filePath + fName); // 파일을 읽어오기 위해 경로 설정할 file객체생성
+
+		BufferedReader br = null; // BufferedReader 객체 변수명 설정
+		totalCntLine = 0;// 다른 작업중 지정된 totalCntLine을 0으로 설정
+
+		try {// 다른작업은 하지않고 totalCntLine만 세는 작업
+			br = new BufferedReader(new FileReader(file));
+			while ((data = br.readLine()) != null) {
+				totalCntLine++;// 줄 수만큼 읽어들임
+			} // end while
+		} catch (Exception e) {
+			e.printStackTrace();
+		} // end catch
+			///////////////// 수정된부분//////////////////////
+
 		if (sm.getJtfLineinput().getText().equals("")) { // 라인입력 값이 없으면
 			startLine = 0; // 디폴트값 0넣기
-			endLine = 20000;// 디폴트값 20000 넣기
+			endLine = totalCntLine;// 디폴트값넣기
 		} else {
 			try {
 				int index = sm.getJtfLineinput().getText().indexOf("~"); // ~표시 찾아서 인덱스 값을 변수에 넣기
 				startLine = Integer.parseInt(sm.getJtfLineinput().getText().substring(0, index)); // start 짜르기
-				endLine = Integer.parseInt(sm.getJtfLineinput().getText().substring(index + 1,
-						sm.getJtfLineinput().getText().length())); // end 짜르기
-			} catch (Exception e) { //사용자가 숫자입력안해서 parseInt가 안먹으면 에러가 나고 에러나면 -1로 세팅해라
-				startLine=-1;
-				endLine =-1;
+				endLine = Integer.parseInt(
+						sm.getJtfLineinput().getText().substring(index + 1, sm.getJtfLineinput().getText().length())); // end
+																														// 짜르기
+			} catch (Exception e) { // 사용자가 숫자입력안해서 parseInt가 안먹으면 에러가 나고 에러나면 -1로 세팅해라
+				startLine = -1;
+				endLine = -1;
 			} // end catch
 		} // end else
-	}//lineCheck
-	
+	}// lineCheck
 
 	/**
 	 * 파일 읽어오는 메소드
@@ -230,8 +257,10 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 					+ "%)\n");
 			bw.write("3번\n성공 횟수(200) : " + lv.getCode200() + ", 실패 횟수(404) : " + lv.getCode404() + "\n");// 3번문제
 			bw.write("4번\n요청이 가장 많은 시간대: " + lv.getMaxHourValue() + "시\n");// 4번문제
-			bw.write("5번\n비정상적인 요청 (403)" + lv.getCode403() + "번, 비율 : " + Math.round(((double) lv.getCode403() / (double) getCntLine() * 100.0)) + "%\n");// 5번문제
-			bw.write("6번\n요청에 대한 에러 (500)" + lv.getCode500() + "번, 비율 : " + Math.round(((double) lv.getCode500() / (double) getCntLine() * 100.0)) + "%\n");// 6번문제
+			bw.write("5번\n비정상적인 요청 (403)" + lv.getCode403() + "번, 비율 : "
+					+ Math.round(((double) lv.getCode403() / (double) getCntLine() * 100.0)) + "%\n");// 5번문제
+			bw.write("6번\n요청에 대한 에러 (500)" + lv.getCode500() + "번, 비율 : "
+					+ Math.round(((double) lv.getCode500() / (double) getCntLine() * 100.0)) + "%\n");// 6번문제
 			bw.flush();// 분출
 
 		} finally {
