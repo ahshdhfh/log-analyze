@@ -4,7 +4,7 @@ import java.util.Collections;
 
 public class LogDecomposition {
 
-	private LogVO lv; // ·Î±×Á¤º¸°´Ã¼
+	private LogVO lv; // ë¡œê·¸ì •ë³´ê°ì²´
 	
 	
 	
@@ -13,100 +13,104 @@ public class LogDecomposition {
 	}
 	
 	/**
-	 * 1¹ø ¹®Á¦ °¡Àå¸¹ÀÌ ³ª¿Â key Ã£¾Æ³»´Â ¸Ş¼­µå
+	 * 1ë²ˆ ë¬¸ì œ ê°€ì¥ë§ì´ ë‚˜ì˜¨ key ì°¾ì•„ë‚´ëŠ” ë©”ì„œë“œ
 	 */
 	public void countKey(String token) {
-		int values = 0; // Å°°ª ÀÓ½ÃÀúÀåÇÒ º¯¼ö
 
-		// http://sist.co.kr/find/books?key=mongodb&query=sist ÀÌ·¸°Ô Àß·ÁÀú¼­ ¿À´Âµ¥ ÀÌ°É ÃßÃâÇØ¾ßÇÔ
-		if (token.indexOf("&") != -1) { // &°¡ 403ÄÚµå¶û 500ÄÚµå´Â Å°°¡ ¾øÀ½ ±×·¡¼­ ÀÖ´ÂÁö Ã¼Å©ÇØ¾ßÇÔ
-			token = token.substring(token.indexOf("key=") + 4, token.indexOf("&")); // key= ¶û & ·Î ÃßÃâ
+		// http://sist.co.kr/find/books?key=mongodb&query=sist ì´ë ‡ê²Œ ì˜ë ¤ì €ì„œ ì˜¤ëŠ”ë° ì´ê±¸ ì¶”ì¶œí•´ì•¼í•¨
+		if (token.indexOf("&") != -1) { // &ê°€ 403ì½”ë“œë‘ 500ì½”ë“œëŠ” í‚¤ê°€ ì—†ìŒ ê·¸ë˜ì„œ ìˆëŠ”ì§€ ì²´í¬í•´ì•¼í•¨
+			int start = token.indexOf("key=") + 4;
+			int end =  token.indexOf("&");
+			token = token.substring(start, end); // key= (start)ë‘ &(end) ë¡œ ì¶”ì¶œ // start <= , end <
 		} // end if
 
-		if (!(lv.getKey().containsKey(token))) {// Å°°¡ ¾øÀ¸¸é?
-			lv.getKey().put(token, 1);// »õ·Î¿î Å°, °ªÀ» ¼³Á¤
-		} else if (lv.getKey().containsKey(token)) {// Å°°¡ Á¸ÀçÇÏ¸é?
-			values = lv.getKey().get(token);// ÇöÀç ÀúÀåµÈ °ªÀ» ÀÓ½ÃÀúÀå
-			values += 1;// °ª¿¡ 1 Ä«¿îÆ®
-			lv.getKey().put(token, values);// Ä«¿îÆÃ µÈ °ªÀ» ³Ö±â
+		if (!(lv.getKey().containsKey(token))) {// í‚¤ê°€ ì—†ìœ¼ë©´?
+			lv.getKey().put(token, 1);// ìƒˆë¡œìš´ í‚¤(key), ê°’(value)ì„ ì„¤ì •		
+		} else if (lv.getKey().containsKey(token)) {// í‚¤ê°€ ì¡´ì¬í•˜ë©´?
+			int values = 0; // í‚¤ê°’ ì„ì‹œì €ì¥í•  ë³€ìˆ˜
+			values = lv.getKey().get(token);// í˜„ì¬ ì €ì¥ëœ ê°’ì„ ì„ì‹œì €ì¥
+			values += 1;// ê°’ì— 1 ì¹´ìš´íŠ¸
+			lv.getKey().put(token, values);// ì¹´ìš´íŒ… ëœ ê°’ì„ ë„£ê¸°
 		} // end else if
 	}// calMostFrequentKey
 	
 	/**
-	 * °¡Àå ¸¹ÀÌ È£ÃâµÈ Å°°ª ÀúÀåÇØÁÖ´Â ¸Ş¼Òµå
+	 * ê°€ì¥ ë§ì´ í˜¸ì¶œëœ í‚¤ê°’ ì €ì¥í•´ì£¼ëŠ” ë©”ì†Œë“œ
 	 */
 	public void calMostFrequentKey() {
+		
 		int maxValue = Collections.max(lv.getKey().values());
-		// key7¿¡ Ä«¿îÆ®µÈ °ªµéÁß collections.maxÀ» ÅëÇØ °¡Àå ¸¹ÀÌ Ä«¿îÆ®µÈ È½¼ö¸¦ µµÃâÇÑ´Ù.
-		for (String r : lv.getKey().keySet()) {// key¿¡ key1À» ÅëÇØ ¾òÀº ¸ğµç Å°¸¦ ¾ò´Â´Ù.
-			if (lv.getKey().get(r) == maxValue) {// keyÀÇ Å°°ª Áß °¡Àå ¸¹Àº È½¼ö¸¦ ¾òÀº Å°°¡ ÀÖÀ» °æ¿ì
-				lv.setMostFrequentKey(r + "");// ±× "Å°°ªÀ» ÃÖ´Ù»ç¿ë Å°"·Î ÁöÁ¤ÇÑ´Ù.
-				lv.setMostFrequentKeyV(maxValue); // ÀúÀåÇÏ±â
-				break; // Ã£¾ÒÀ¸¸é Å»Ãâ
+		lv.setMostFrequentKeyV(maxValue);
+		// key7ì— ì¹´ìš´íŠ¸ëœ ê°’ë“¤ì¤‘ collections.maxì„ í†µí•´ ê°€ì¥ ë§ì´ ì¹´ìš´íŠ¸ëœ íšŸìˆ˜ë¥¼ ë„ì¶œí•œë‹¤.
+		for (String r : lv.getKey().keySet()) {// keyì— key1ì„ í†µí•´ ì–»ì€ ëª¨ë“  í‚¤ë¥¼ ì–»ëŠ”ë‹¤.
+			if (lv.getKey().get(r) == maxValue) {// keyì˜ í‚¤ê°’ ì¤‘ ê°€ì¥ ë§ì€ íšŸìˆ˜ë¥¼ ì–»ì€ í‚¤ê°€ ìˆì„ ê²½ìš°
+				lv.getMostFrequentKey().add(r);// " Listë¡œ ë³€ê²½" , ê·¸ "í‚¤ê°’ì„ ìµœë‹¤ì‚¬ìš© í‚¤"ë¡œ ì§€ì •í•œë‹¤.
+				 // ì €ì¥í•˜ê¸°
+    	   //break; // ì°¾ì•˜ìœ¼ë©´ íƒˆì¶œ
 			} // end if
 		} // end for
 	}// calMostFrequentKey
 	
 	/**
-	 * 2¹ø¹®Á¦ ºê¶ó¿ìÀúº° Á¢¼Ó È½¼ö, ºñÀ²±¸ÇÏ±â
+	 * 2ë²ˆë¬¸ì œ ë¸Œë¼ìš°ì €ë³„ ì ‘ì† íšŸìˆ˜, ë¹„ìœ¨êµ¬í•˜ê¸°
 	 */
 	public void countBrowser(String token) {
-		if (token.equals("ie")) { // ÅäÅ«ÀÌ ieÀÌ¸é?
-			lv.setIe(lv.getIe() + 1); // 1+ÇØ¼­ ÀúÀå
-		} else if (token.equals("Chrome")) { // ÅäÅ«ÀÌ ChromeÀÌ¸é?
-			lv.setChrome(lv.getChrome() + 1); // 1+ÇØ¼­ ÀúÀå
-		} else if (token.equals("firefox")) { // ÅäÅ«ÀÌ firefoxÀÌ¸é?
-			lv.setFirefox(lv.getFirefox() + 1); // 1+ÇØ¼­ ÀúÀå
-		} else if (token.equals("opera")) { // ÅäÅ«ÀÌ operaÀÌ¸é?
-			lv.setOpera(lv.getOpera() + 1); // 1+ÇØ¼­ ÀúÀå
-		} else if (token.equals("Safari")) { // ÅäÅ«ÀÌ SafariÀÌ¸é?
-			lv.setSafari(lv.getSafari() + 1); // 1+ÇØ¼­ ÀúÀå
+		if (token.equals("ie")) { // í† í°ì´ ieì´ë©´?
+			lv.setIe(lv.getIe() + 1); // 1+í•´ì„œ ì €ì¥
+		} else if (token.equals("Chrome")) { // í† í°ì´ Chromeì´ë©´?
+			lv.setChrome(lv.getChrome() + 1); // 1+í•´ì„œ ì €ì¥
+		} else if (token.equals("firefox")) { // í† í°ì´ firefoxì´ë©´?
+			lv.setFirefox(lv.getFirefox() + 1); // 1+í•´ì„œ ì €ì¥
+		} else if (token.equals("opera")) { // í† í°ì´ operaì´ë©´?
+			lv.setOpera(lv.getOpera() + 1); // 1+í•´ì„œ ì €ì¥
+		} else if (token.equals("Safari")) { // í† í°ì´ Safariì´ë©´?
+			lv.setSafari(lv.getSafari() + 1); // 1+í•´ì„œ ì €ì¥
 		} // end else
 	}// countBowser
 
 	/**
-	 * 3¹ø, 5¹ø, 6¹ø¹®Á¦ codeÄ«¿îÆ®ÇÏ±â
+	 * 3ë²ˆ, 5ë²ˆ, 6ë²ˆë¬¸ì œ codeì¹´ìš´íŠ¸í•˜ê¸°
 	 * 
 	 * @param token
 	 */
 	public void cntCode(String token) {
-		switch (Integer.parseInt(token)) { // ¸Å°³º¯¼ö·Î ¹ŞÀº ÅäÅ«À» int·Î ÀúÀå case¹®À¸·Î µ¹¸®±â À§ÇØ
+		switch (Integer.parseInt(token)) { // ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì€ í† í°ì„ intë¡œ ì €ì¥ caseë¬¸ìœ¼ë¡œ ëŒë¦¬ê¸° ìœ„í•´
 		case 200:
 			lv.setCode200(lv.getCode200() + 1);
-			break; // ÅäÅ«ÀÌ Code200ÀÌ¸é? 1+ÇØ¼­ ÀúÀå
+			break; // í† í°ì´ Code200ì´ë©´? 1+í•´ì„œ ì €ì¥
 		case 403:
 			lv.setCode403(lv.getCode403() + 1);
-			break; // ÅäÅ«ÀÌ Code403ÀÌ¸é? 1+ÇØ¼­ ÀúÀå
+			break; // í† í°ì´ Code403ì´ë©´? 1+í•´ì„œ ì €ì¥
 		case 404:
 			lv.setCode404(lv.getCode404() + 1);
-			break; // ÅäÅ«ÀÌ Code404ÀÌ¸é? 1+ÇØ¼­ ÀúÀå
+			break; // í† í°ì´ Code404ì´ë©´? 1+í•´ì„œ ì €ì¥
 		case 500:
 			lv.setCode500(lv.getCode500() + 1);
-			break; // ÅäÅ«ÀÌ Code500ÀÌ¸é? 1+ÇØ¼­ ÀúÀå
+			break; // í† í°ì´ Code500ì´ë©´? 1+í•´ì„œ ì €ì¥
 		}// end switch
 	}// cntCode
 	
 	/**
-	 * 4¹ø¹®Á¦ °¡Àå¸¹ÀÌ Á¢¼ÓÇÑ ½Ã°£ Ã£´Â ¸Ş¼­µå
+	 * 4ë²ˆë¬¸ì œ ê°€ì¥ë§ì´ ì ‘ì†í•œ ì‹œê°„ ì°¾ëŠ” ë©”ì„œë“œ
 	 */
 	public void calTime() {
-		for (int h = 1; h < lv.getHour().length; h++) { // 0~23½Ã°£ ¹è¿­À» ´Ùµ¹¸®±â
-			if (lv.getHour()[h] > lv.getHour()[h - 1]) { // Ä«¿îÆ®µÈ°Ô ´õ ¸¹Àº ½Ã°£Ã£±â
-				lv.setMaxHourValue(h); // ÀúÀå
+		for (int h = 1; h < lv.getHour().length; h++) { // 0~23ì‹œê°„ ë°°ì—´ì„ ë‹¤ëŒë¦¬ê¸°
+			if (lv.getHour()[h] > lv.getHour()[h - 1]) { // ì¹´ìš´íŠ¸ëœê²Œ ë” ë§ì€ ì‹œê°„ì°¾ê¸°
+				lv.setMaxHourValue(h); // ì €ì¥
 			} // end if
 		} // end for
 	} // calTIme
 
 	/**
-	 * 4¹ø¹®Á¦ È£ÃâµÈ ½Ã°£°ª Ä«¿îÆ®ÇÏ´Â ¸Ş¼Òµå
+	 * 4ë²ˆë¬¸ì œ í˜¸ì¶œëœ ì‹œê°„ê°’ ì¹´ìš´íŠ¸í•˜ëŠ” ë©”ì†Œë“œ
 	 * 
 	 * @param token
 	 */
 	public void calMostFrequentHour(String token) {
 
-		token = token.substring(11, 13); // ÅäÅ«ÀÌ 2023-01-16 09:35:16 ÀÌ·¸°Ô ³Ñ¾î¿À´Âµ¥ 11¹øÂ° 13¹øÂ°°ª Àß¶ó¿À±â
-		int num = Integer.parseInt(token); // int ÇüÀ¸·Î ¹Ù²Ù±â
-		lv.getHour()[num]++; // ÀúÀå
+		token = token.substring(11, 13); // í† í°ì´ 2023-01-16 09:35:16 ì´ë ‡ê²Œ ë„˜ì–´ì˜¤ëŠ”ë° 11ë²ˆì§¸ 13ë²ˆì§¸ê°’ ì˜ë¼ì˜¤ê¸°
+		int num = Integer.parseInt(token); // int í˜•ìœ¼ë¡œ ë°”ê¾¸ê¸°
+		lv.getHour()[num]++; // ì €ì¥
 
 	} // calMostFrequentHour
 		
