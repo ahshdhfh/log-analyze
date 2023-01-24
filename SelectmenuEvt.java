@@ -94,7 +94,7 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 
 		if (ae.getSource() == sm.getJbtnView()) { // view 버튼이 눌리면
-			if (ExecuteCondition()) {
+			if (executeCondition()) {
 				try {
 					readLog(); // 파일 읽기
 					ldp.calTime(); // 가장 많이 호출된 시간계산
@@ -107,7 +107,7 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		} // end if
 
 		if (ae.getSource() == sm.getJbtnReport()) { // 레포트 버튼이 눌리면
-			if (ExecuteCondition()) {
+			if (executeCondition()) {
 				if (lg.getId().equals("root")) {
 					JOptionPane.showMessageDialog(sm, "문서를 생성할 수 있는 권한이 없음");
 				} else {
@@ -137,26 +137,28 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		} // end if
 	}// actionPerformed
 
-	public boolean ExecuteCondition() {
+	public boolean executeCondition() {
 		boolean result = false;
+		if (!fName.equals("") || !fName.equals("")) { // 파일 골랐는지
 		if (fName.equals("sist_input_1.log") || fName.equals("sist_input_2.log")) { // 파일이 지원하는 형식인지
 			lineCheck();// 원하는 라인입력값확인
 			if (totalCntLine < startLine || totalCntLine < endLine) {//
 				JOptionPane.showMessageDialog(sm, "지정된 수가 너무 큽니다! " + totalCntLine + "줄 내에서 설정해주세요!");
-			} else if ((endLine > startLine || endLine == startLine) && (startLine > -1 && endLine > -1)) { // 라인 입력값
-																											// 형식이 맞는지
+			} else if ((endLine > startLine || endLine == startLine) && (startLine > -1 && endLine > -1)) { // 라인 입력값 형식이 맞는지
 				result = true;
 			} else {
-				JOptionPane.showMessageDialog(sm, "라인 수를 다시입력해주세요"); // 라인수 형식이 맞지 않음
+				JOptionPane.showMessageDialog(sm, "라인 수를 다시 입력해주세요"); // 라인수 형식이 맞지 않음
 			} // end else
 		} else {
 			JOptionPane.showMessageDialog(sm, "지원하는 파일 형식이 아닙니다. 파일을 다시 선택해주세요"); // 지원하는 파일 형식이 아님
 		} // end else
+		}else {
+			JOptionPane.showMessageDialog(sm, "파일을 선택해주세요"); // 파일을 선택해주세요
+		}
 		return result;
 	}
 
 	public void lineCheck() {
-		///////////////// 수정된부분//////////////////////
 		File file = new File(filePath + fName); // 파일을 읽어오기 위해 경로 설정할 file객체생성
 
 		BufferedReader br = null; // BufferedReader 객체 변수명 설정
@@ -170,7 +172,6 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} // end catch
-			///////////////// 수정된부분//////////////////////
 
 		if (sm.getJtfLineinput().getText().equals("")) { // 라인입력 값이 없으면
 			startLine = 0; // 디폴트값 0넣기
@@ -250,7 +251,9 @@ public class SelectmenuEvt extends WindowAdapter implements ActionListener {
 		try {
 			bw = new BufferedWriter(new FileWriter(saveFile)); // 해당 파일이름으로 저장해라
 
-			bw.write("1번\n가장많이 접속한 브라우저 : " + lv.getMostFrequentKey() + ", 횟수 : " + lv.getMostFrequentKeyV() + "\n");// 1번문제
+			bw.write("분석한 파일 : "+fName + "\n");// 1번문제
+			bw.write("라인범위 : "+ (sm.getJtfLineinput().getText().equals("") ? "모든 " : sm.getJtfLineinput().getText() )+ " 범위"+ "\n");// 1번문제
+			bw.write("1번\n가장많이 사용된 키 : " + lv.getMostFrequentKey() + ", 횟수 : " + lv.getMostFrequentKeyV() + "\n");// 1번문제
 			bw.write("2번\nIE : " + lv.getIe() + "(" + Math.round(((double) lv.getIe() / (double) getCntLine() * 100.0))
 					+ "%)"// 2번문제
 					+ ", FireFox : " + lv.getFirefox() + "("
