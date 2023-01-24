@@ -18,10 +18,10 @@ public class Result extends JDialog {
 
 		JTextField jtfViewLine = new JTextField(); // 범위선택택스트창
 		jtfViewLine.setText(
-				"총 log 개수는 " + smenu.getCntLine() + "개이며," + smenu.getStartLine()+" ~ "+smenu.getEndLine() + "범위의 로그분석결과입니다."); // 범위선택택스트창
+				"총 라인 수는 " + smenu.getCntLine() + "줄 이며, " + (main.getJtfLineinput().getText().equals("") ? "모든 " : main.getJtfLineinput().getText() )+ "범위의 로그분석결과입니다."); // 범위선택택스트창
 		jtfViewLine.setEditable(false); // 사용자가 못건들게
 		jtfViewLine.setBorder(new LineBorder(Color.BLACK, 1)); // 강조를 위한 LineBorder
-		jtfViewLine.setFont(new Font("맑은고딕", Font.BOLD, 12)); // 폰트설정
+		jtfViewLine.setFont(new Font("맑은고딕", Font.BOLD, 11)); // 폰트설정
 		jtfViewLine.setBackground(new Color(0xF3F5F7)); // 색상설정
 
 		JTextField jtfFile = new JTextField(); // 선택파일텍스트
@@ -33,10 +33,10 @@ public class Result extends JDialog {
 		JLabel jlblFile = new JLabel("선택한 파일: "); // 선택파일라벨
 
 		JTextField jtfmaxKey = new JTextField(); // 1번
-		jtfmaxKey.setText(lv.getMostFrequentKey() + " / " + lv.getMostFrequentKeyV() + "개"); // 가장 많이 사용한 키 와 갯수
+		jtfmaxKey.setText(lv.getMostFrequentKey()+ " / " + lv.getMostFrequentKeyV() + "개"); // 가장 많이 사용한 키 와 갯수
 		jtfmaxKey.setEditable(false); // 사용자가 못건들게
 		jtfmaxKey.setBorder(new LineBorder(Color.BLACK, 2)); // 강조를 위한 LineBorder
-		jtfmaxKey.setFont(new Font("맑은고딕", Font.BOLD, 15)); // 폰트설정
+		jtfmaxKey.setFont(new Font("맑은고딕", Font.BOLD, 10)); // 폰트설정
 		jtfmaxKey.setBackground(Color.WHITE);// 색상설정
 		JLabel jlblmaxKey = new JLabel("1. 최다 사용키: "); // 1번 결과: 텍스트
 
@@ -220,13 +220,13 @@ public class Result extends JDialog {
 		bigFrame.setBounds(10, 20, 560, 530);
 		img1.setBounds(0, 10, 300, 100); // 이미지라벨
 		img2.setBounds(420, 30, 130, 160); // 이미지라벨
-		jtfViewLine.setBounds(200, 515, 360, 25); // 선택파일 텍스트
+		jtfViewLine.setBounds(185, 515, 380, 25); // 선택파일 텍스트
 		jtfFile.setBounds(110, 120, 150, 40); // 선택파일 텍스트
 		jlblFile.setBounds(20, 120, 100, 40); // 선택파일 라벨
 		emphasis1.setBounds(20, 170, 250, 3); // 선택파일 라벨
 
-		jtfmaxKey.setBounds(110, 200, 150, 40); // 1번입력
-		jlblmaxKey.setBounds(20, 200, 100, 40); // 1번라벨
+		jtfmaxKey.setBounds(30, 200, 230, 40); // 1번입력
+		jlblmaxKey.setBounds(20, 170, 100, 40); // 1번라벨
 		jtfbrowseronnect.setBounds(125, 275, 135, 20);// 2번입력
 		jtfbrowseronnect1.setBounds(125, 300, 135, 20);// 2번입력
 		jtfbrowseronnect2.setBounds(125, 325, 135, 20);// 2번입력
