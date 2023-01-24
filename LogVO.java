@@ -1,12 +1,14 @@
 package project;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LogVO {
 
 	private String mostFrequentHour;// 가장 요청이 많은 시간
-	private String mostFrequentKey;// 가장 요청이 많은 키
+	private List<String> mostFrequentKey=new ArrayList<String>();// 가장 요청이 많은 키
 	private int mostFrequentKeyV;// 가장 요청이 많은 키의 값
 	private int maxHourValue;// 시간
 	int[] hour = new int[24]; // 시간호출된 개수새는 변수
@@ -26,8 +28,8 @@ public class LogVO {
 		code500 = 0;// 코드 403이 나온 횟수
 
 		mostFrequentHour = "";// 가장 요청이 많은 시간
-		mostFrequentKey = "";// 가장 요청이 많은 키
 		mostFrequentKeyV = 0;// 가장 요청이 많은 키의 값
+		mostFrequentKey.clear();
 
 		ie = 0;// 브라우저 카운트
 		firefox = 0;// 브라우저 카운트
@@ -56,11 +58,11 @@ public class LogVO {
 		this.mostFrequentHour = mostFrequentHour;
 	}// setMostFrequentHour
 
-	public String getMostFrequentKey() {
+	public List<String> getMostFrequentKey() {
 		return mostFrequentKey;
 	}// getMostFrequentKey
 
-	public void setMostFrequentKey(String mostFrequentKey) {
+	public void setMostFrequentKey(List<String> mostFrequentKey) {
 		this.mostFrequentKey = mostFrequentKey;
 	}// setMostFrequentKey
 
