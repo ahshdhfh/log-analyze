@@ -1,6 +1,6 @@
 package project;
 
-public class LogaAnalysis {
+public class LogAnalysis {
 
 	public static void main(String[] args) {
 		new Login();
