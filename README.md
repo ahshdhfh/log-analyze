@@ -19,3 +19,7 @@
 - `Java 11`
 - `java-11-openjdk-11.0.15-1`
 - **IDE** : eclipse
+
+### 📌 화면
+![1차프로젝트](https://github.com/ahshdhfh/log-analyze/assets/51796947/e4452950-b69c-44a6-8ca0-37f58f8e7242)
+
